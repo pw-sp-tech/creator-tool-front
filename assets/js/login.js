@@ -124,7 +124,7 @@ function login() {
         } else if (pass !== pass2) {
             showAlert("Passwords Not Matched!")
         } else {
-            fetchData('/reg', {
+            fetchData('/login', {
                 method: "POST",
                 headers: {
                     "content-type": "application/json"
@@ -134,7 +134,9 @@ function login() {
                     pass,
                     type: "reg"
                 })
-            }).then(data => {})
+            }).then(data => {
+                alert("Successfully Registered. Please Login")
+            })
         }
     }
 }
