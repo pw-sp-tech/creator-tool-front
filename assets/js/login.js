@@ -134,9 +134,7 @@ function login() {
                     pass,
                     type: "reg"
                 })
-            }).then(data => {
-                window.location.href = 'login.html'
-            })
+            }).then(data => {})
         }
     }
 }
