@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+
+    <!-- Custom Stylesheet -->
+    <link type="text/css" rel="stylesheet" href="assets/css/main.css">
+    <title>PW Video QC</title>
+</head>
+
+<body>
+    <header class="headerContainer hidden">
+        <p class="headerProp" id="trackerName">
+            <span class="headerPropTitle">Tracker Name: </span><span class="headerPropValue"></span>
+        </p>
+        <p class="headerProp" id="sheetName">
+            <span class="headerPropTitle">Sheet Name: </span><span class="headerPropValue"></span>
+        </p>
+        <p class="headerProp hidden" id="desiredFormat">
+            <span class="headerPropTitle">Desired Video Format: </span><span class="headerPropValue"></span>
+        </p>
+        <p class="headerProp" id="qcPerson">
+            <span class="headerPropTitle">QC Person: </span><span class="headerPropValue"></span>
+        </p>
+        <p class="headerProp" id="filterApplied">
+            <span class="headerPropTitle">Filtered By: </span><span class="headerPropValue"></span>
+        </p>
+        <button class="btnLogout">Logout</button>
+    </header>
+    <div class="progress">
+        <div class="progressBar"></div>
+        <p class="progressNum"></p>
+    </div>
+    <div class="loader-box hidden">
+        <div class="ring"></div>
+        <div class="ring"></div>
+        <div class="ring"></div>
+        <p class="loader-text" style="top: 150px; width: 60%;text-align: center;">Verifying User...</p>
+        <div class="choices hidden">
+            <select class="manager-choice">
+                <option value="" hidden selected disabled>Select Manager Name&nbsp;&#9660;</option>
+               
+            </select>
+            <select class="tracker-choice" disabled>
+                <option value="" hidden selected disabled>Select Tracker Name&nbsp;&#9660;</option>
+               
+            </select>
+            <select class="subSheet-choice" disabled>
+                <option value="" hidden selected disabled>Select SubSheet Name&nbsp;&#9660;</option>
+            </select>
+            <button class="choice-btn hidden">Search</button>
+        </div>
+    </div>
+
+
+    <div class="dynamic-filter-container filterContainer hidden">
+        <label for="filterSelect">Filter Results By:</label>
+        <select class="filterSelect" id="filterSelect">
+                <option value="" hidden selected disabled>Filter By Status&nbsp;&#9660;</option>
+                <option value="Not Picked">Not Picked</option>
+            </select>
+        <select class="dynamic-filterSelect hidden" id="filter-copy">
+                <option value="" hidden selected disabled>Filter By&nbsp;&#9660;</option>
+            </select>
+
+    </div>
+    <div class="filterBtnContainer hidden2">
+
+        <button class="searchBtn">Search</button>
+        <button class="loadPreBtn hidden">Previous Page</button>
+        <button class="loadNextBtn hidden">Next Page</button>
+        <button class="resetCanvasBtn hidden">Reset Canvas</button>
+        <div class="info hidden2">
+            <h2>Search taking longer than usual. Please close the window and try again.</h2>
+        </div>
+    </div>
+    <div class="filterContainer footer hidden2" id="footer">
+        <button class="loadPreBtn ">Previous Page</button>
+        <button class="loadNextBtn ">Next Page</button>
+    </div>
+    <div class="customTextCard hidden">
+        <p class="customText">Select a filter and click search.</p>
+    </div>
+    <div class="videoCard hidden">
+        <div class="vidPropContainer">
+            <div class="videoCardProp vidNameProp">
+                <p class="rowInSheet l">
+                    <span class="videoCardPropTitle">Row In Sheet: </span><span class="videoCardPropValue">16</span>
+                </p>
+                <p class="nameInSheet l">
+                    <span class="videoCardPropTitle">Name(In Sheet): </span><span class="videoCardPropValue">HGCNC11CU01BEUDTQ016</span>
+                </p>
+                <p class="nameActual l">
+                    <span class="videoCardPropTitle">Name(Actual): </span><span class="videoCardPropValue">N/A</span>
+                </p>
+                <p class="id l hidden"><span class="videoCardPropTitle"></span><span class="videoCardPropValue"></span></p>
+                <p class="parentURL l hidden"><span class="videoCardPropTitle"></span><span class="videoCardPropValue"></span>
+                </p>
+            </div>
+            <div class="videoCardProp vidQCProp">
+                <p class="verUploaded l">
+                    <span class="videoCardPropTitle">Version(Uploaded): </span><span class="videoCardPropValue">Round 2</span>
+                </p>
+                <p class="verQCed l">
+                    <span class="videoCardPropTitle">Version(QCed):  </span><span class="videoCardPropValue">Round 1</span>
+                </p>
+                <p class="qcStatus l">
+                    <span class="videoCardPropTitle">QC Status: </span><span class="videoCardPropValue">Round 1 Rejected</span>
+                </p>
+            </div>
+            <div class="videoCardProp vidAttrProp">
+                <p class="owner l">
+                    <span class="videoCardPropTitle">Owner: </span><span class="videoCardPropValue">Not Fetched</span>
+                </p>
+                <p class="educatorName">
+                    <span class="videoCardPropTitle">Educator: </span><span class="videoCardPropValue">Ramavtar Chhaba</span>
+                </p>
+                <p class="format s"><span class="videoCardPropTitle">Format: </span><span class="videoCardPropValue">N/A</span>
+                </p>
+                <p class="videoSize s"><span class="videoCardPropTitle">Size: </span><span class="videoCardPropValue">N/A</span>
+                </p>
+                <p class="duration s">
+                    <span class="videoCardPropTitle">Length: </span><span class="videoCardPropValue">N/A</span>
+                </p>
+                <p class="dim s"><span class="videoCardPropTitle">Dim: </span><span class="videoCardPropValue">N/A</span></p>
+            </div>
+            <p class="videoCardProp qcComment videoCardPropFull">
+                <span class="videoCardPropTitle">QC Comment: </span><span class="videoCardPropValue"></span>
+            </p>
+            <p class="videoCardProp educatorFeedback videoCardPropFull">
+                <span class="videoCardPropTitle">Educator Feedback: </span><span class="videoCardPropValue"></span>
+            </p>
+            <p class="videoCardProp pathActual videoCardPropFull">
+                <span class="videoCardPropTitle">Path(Actual): </span><span class="videoCardPropValue">N/A</span>
+            </p>
+            <p class="videoCardProp pathShouldBe videoCardPropFull hidden">
+                <span class="videoCardPropTitle">Path(Should Be): </span><span class="videoCardPropValue"></span>
+            </p>
+            <p class="videoCardProp newFiles videoCardPropFull hidden">
+                <span class="videoCardPropTitle">Duplicate Check: </span><span class="videoCardPropValue"></span>
+            </p>
+        </div>
+        <p class="dynamic-props videoCardProp videoCardPropFull hidden">
+            <span class="videoCardPropTitle" style="margin-left: 5px;"></span><span class="videoCardPropValue" style="margin-right: 10px;"></span>
+        </p>
+        <iframe srcdoc="main" sandbox="allow-same-origin allow-scripts allow-popups allow-forms" class="frame hidden2" scrolling="no" frameborder="0" allowfullscreen></iframe>
+        <div class="action">
+            <textarea class="comment_textarea" cols="60" rows="5" placeholder="Type Your Comment..."></textarea>
+            <select class="statusSelect">
+                    <option value=""  selected disabled hidden >Click to choose status&nbsp;&#9660;</option>
+                </select>
+            <select class="roundSelect">
+                    <option value=""  selected disabled hidden >Click to choose round&nbsp;&#9660;</option>
+                </select>
+
+            <button class="btnSubmit btnAction">Submit QC</button>
+            <button class="btnFetch btnAction">Fetch Details</button>
+            <button class="btnShowVid btnAction">Open Video</button>
+        </div>
+    </div>
+</body>
+<!-- External JS libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.0/axios.min.js"></script>
+<script src="assets/js/jquery-3.6.0.min.js"></script>
+<script src="assets/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/jquery.validate.min.js"></script>
+<script src="assets/js/app.js"></script>
+<!-- Custom JS Script -->
+
+</html>
