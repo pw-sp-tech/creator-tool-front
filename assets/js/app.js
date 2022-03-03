@@ -12,8 +12,8 @@ const token = localStorage.getItem('accessToken');
 const header = document.querySelector(".headerContainer");
 const trackerNameHeader = document.querySelector("#trackerName").querySelector(".headerPropValue");
 const sheetNameHeader = document.querySelector("#sheetName").querySelector(".headerPropValue");
-const desiredFormatHeader = document.querySelector("#desiredFormat").querySelector(".headerPropValue");
-const qcPersonHeader = document.querySelector("#qcPerson").querySelector(".headerPropValue");
+
+const qcPersonHeader = document.querySelector(".welcome").querySelector("h2");
 
 const filterContainer = document.querySelector(".filterContainer");
 const filterSelectStatus = document.querySelector("#filterSelect");
@@ -88,6 +88,7 @@ fetchData('/assignments', {
 })
 managerChoice.addEventListener('change', () => {
     trackerChoice.removeAttribute("disabled");
+    managerChoice.classList.add("back-green-dark")
     trackerChoice.querySelectorAll(".visibleChoice").forEach(el => {
         el.remove()
     });
@@ -111,6 +112,7 @@ managerChoice.addEventListener('change', () => {
     })
 })
 trackerChoice.addEventListener('change', () => {
+    trackerChoice.classList.add("back-green-dark")
     sheetChoice.removeAttribute("disabled");
     sheetChoice.querySelectorAll(".visibleChoice").forEach(el => {
         el.remove()
@@ -137,6 +139,7 @@ trackerChoice.addEventListener('change', () => {
 
 sheetChoice.addEventListener('change', () => {
     btnChoice.classList.remove("hidden");
+    sheetChoice.classList.add("back-green-dark")
 });
 btnChoice.addEventListener('click', () => {
     let managerName = managerChoice.value;
@@ -167,8 +170,7 @@ function getParameters(managerName, trackerName, subSheetName) {
         console.log(params)
         trackerNameHeader.innerHTML = data.trackerName;
         sheetNameHeader.innerHTML = data.sheetName;
-        desiredFormatHeader.innerHTML = data.desiredVideoFormat;
-        qcPersonHeader.innerHTML = qcName;
+        qcPersonHeader.innerHTML = `Welcome, ${qcName}`;
 
         header.classList.remove("hidden");
         loaderBox.remove();
@@ -304,6 +306,7 @@ function loadNextPage() {
         loadedIndex = loadedIndex - 100 <= -1 ? -1 : loadedIndex - 100
     }
     let loadTo = loadedIndex + 50 > filteredData.length - 1 ? filteredData.length - 1 : loadedIndex + 50;
+
     let b = 0;
     for (let a = loadedIndex + 1; a <= loadTo; a++) {
         b++;
@@ -344,7 +347,6 @@ function loadNextPage() {
                 let templatePropTitle = optionalPropsDiv.querySelector(".videoCardPropTitle");
                 let templatePropValue = optionalPropsDiv.querySelector(".videoCardPropValue");
                 let optionalPropsArr = params.optionalProps.split(",");
-                let optionalPropsColumns = params.optionalPropsColumn.split(",");
                 let count = -1;
                 optionalPropsArr.forEach(el => {
                     count++
@@ -435,9 +437,19 @@ function loadNextPage() {
         }, 100 * b)
     }
     setTimeout(() => {
-        loadNextBtn.addEventListener('click', loadNextPage);
-        loadNextBtn.addEventListener('click', loadNextPage);
-        loadPreBtn.addEventListener('click', loadNextPage);
+        if (loadTo + 1 >= filteredData.length) {
+            loadNextBtn.classList.add("btnDisabled")
+        } else {
+            loadNextBtn.classList.remove("btnDisabled")
+            loadNextBtn.addEventListener('click', loadNextPage);
+        }
+        if (loadTo <= 49) {
+            loadPreBtn.classList.add("btnDisabled");
+
+        } else {
+            loadPreBtn.classList.remove("btnDisabled");
+            loadPreBtn.addEventListener('click', loadNextPage);
+        }
         loadNextBtn.innerText = "Next Page";
         loadPreBtn.innerText = "Previous Page";
         loadNextBtn.classList.remove("loading");
@@ -618,6 +630,7 @@ async function fetchFromDrive(e) {
             body: JSON.stringify(objToFetch)
         })
         // let res = await axios.post(urlToFetch, JSON.stringify(objToFetch));
+    target.classList.add("back-green-dark")
     timeObj[currVidId]["isDriveFetched"] = 1;
     timeObj[currVidId]["parentMatch"] = res["parentMatch"];
     timeObj[currVidId]["pathShouldBe"] = res["pathShouldBe"];

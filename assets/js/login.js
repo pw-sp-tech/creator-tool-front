@@ -79,7 +79,7 @@ document.querySelector(".create-one2").addEventListener('click', () => {
 });
 
 async function fetchData(url, params) {
-    let res = await fetch(`${urlPrefix}${url}`, params);
+    let res = await fetch(`${urlPrefix}\${url}`, params);
     return await res.json();
 }
 
