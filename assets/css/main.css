@@ -332,7 +332,11 @@ select {
     -webkit-appearance: none;
     -moz-appearance: none;
     text-align: center;
-    margin-left: 20px;
+    margin: 5px 20px;
+}
+
+select:hover {
+    cursor: pointer;
 }
 
 button {
@@ -357,6 +361,10 @@ button {
     min-width: 130px;
     min-height: 35px;
     box-sizing: border-box;
+}
+
+.btnLogout {
+    background-image: linear-gradient(to right, #ff2240, #ff5429, #ff763f, #e72416);
 }
 
 button:hover {

@@ -14,7 +14,7 @@ const trackerNameHeader = document.querySelector("#trackerName").querySelector("
 const sheetNameHeader = document.querySelector("#sheetName").querySelector(".headerPropValue");
 const desiredFormatHeader = document.querySelector("#desiredFormat").querySelector(".headerPropValue");
 const qcPersonHeader = document.querySelector("#qcPerson").querySelector(".headerPropValue");
-const filterAppliedHeader = document.querySelector("#filterApplied").querySelector(".headerPropValue");
+
 const filterContainer = document.querySelector(".filterContainer");
 const filterSelectStatus = document.querySelector("#filterSelect");
 const defaultStatusFilterOption = filterSelectStatus.querySelectorAll("option")[1];
@@ -169,7 +169,7 @@ function getParameters(managerName, trackerName, subSheetName) {
         sheetNameHeader.innerHTML = data.sheetName;
         desiredFormatHeader.innerHTML = data.desiredVideoFormat;
         qcPersonHeader.innerHTML = qcName;
-        filterAppliedHeader.innerHTML = "No Filter Applied";
+
         header.classList.remove("hidden");
         loaderBox.remove();
         configureFilters();
@@ -469,7 +469,7 @@ let runSearch = () => {
     filterObj[statusColumn] = filterObj.filterSelect;
     timeObj = {};
     loadedIndex = -1;
-    customText.innerText = `Searching for ${Object.values(filterObj).join(", ")}`;
+    customText.innerText = `Filtering Data`;
     customText.classList.add("loading")
     searchBtn.removeEventListener('click', runSearch);
     searchBtn.innerText = "Fetching Sheet Data";

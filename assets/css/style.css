@@ -32,7 +32,7 @@ Version:    1.1.0
 
 body {
     font-family: 'Open Sans', sans-serif;
-    color: #535353;
+    color: #fff;
 }
 
 .img-fluid {
@@ -117,7 +117,7 @@ body {
 .login-box .form-group label.error {
     font-size: 13px;
     text-align: left;
-    color: #535353;
+    color: #fff;
     width: 100%;
 }
 
@@ -146,7 +146,8 @@ body {
     justify-content: center;
     align-items: center;
     padding: 15px 0;
-    background: #fff2f2;
+    background: linear-gradient(to bottom right, #403f44, #1e1b32);
+    ;
 }
 
 .login-1 h1,
@@ -216,9 +217,10 @@ h6,
     z-index: 1;
     position: relative;
     font-size: 14px;
-    color: #535353;
+    color: #fff;
     text-transform: capitalize;
-    background: #fff2f2;
+    background: linear-gradient(to bottom right, #403f44, #1e1b32);
+    ;
 }
 
 .login-1 .form-section .form-check-input {
@@ -252,15 +254,19 @@ h6,
 }
 
 .login-1 .form-section p {
-    color: #535353;
+    color: rgb(255, 255, 255);
     margin-bottom: 0;
     text-align: center;
     font-size: 15px;
 }
 
+.alert-text {
+    color: #000;
+}
+
 .login-1 .form-section p a {
     font-weight: 500;
-    color: #535353;
+    color: #fff;
 }
 
 .login-1 .form-section ul {
@@ -282,7 +288,7 @@ h6,
     margin: 0 0 25px;
     font-size: 25px;
     font-weight: 400;
-    color: #313131;
+    color: #ffffff;
 }
 
 .login-1 .form-section .form-group {
@@ -323,13 +329,13 @@ h6,
     margin-bottom: 0;
     font-size: 15px;
     font-weight: 500;
-    color: #535353;
+    color: #ffffff;
     text-align: left;
 }
 
 .login-1 .form-section a.forgot-password {
     font-size: 15px;
-    color: #535353;
+    color: #ffffff;
     float: right;
 }
 
@@ -410,7 +416,7 @@ h6,
 }
 
 .login-1 .btn-primary {
-    background: #2ad4bc;
+    background: #2ad463;
     border-color: #51d4bc;
 }
 
@@ -483,7 +489,8 @@ h6,
         border-radius: 5px;
     }
     .login-1 {
-        background: #fff2f2;
+        background: linear-gradient(to bottom right, #403f44, #1e1b32);
+        ;
     }
     .none-992 {
         display: none !important;
@@ -632,12 +639,12 @@ h6,
     margin-bottom: 0;
     font-size: 16px;
     font-weight: 500;
-    color: #535353;
+    color: #fff;
 }
 
 .login-2 .form-section p a {
     font-weight: 500;
-    color: #535353;
+    color: #fff;
 }
 
 .login-2 .form-section ul {
@@ -766,7 +773,7 @@ h6,
 }
 
 .login-2 .form-section .form-check a {
-    color: #535353;
+    color: #fff;
     float: right;
 }
 
@@ -780,7 +787,7 @@ h6,
     margin-bottom: 0;
     font-size: 16px;
     font-weight: 500;
-    color: #535353;
+    color: #fff;
 }
 
 .login-2 .form-section a.forgot-password {
@@ -1140,21 +1147,21 @@ h6,
 }
 
 .login-3 label {
-    color: #535353;
+    color: #fff;
     font-size: 16px;
     margin-bottom: 5px;
     font-weight: 500;
 }
 
 .login-3 .form-section p {
-    color: #535353;
+    color: #fff;
     font-size: 16px;
     font-weight: 400;
     margin-bottom: 40px;
 }
 
 .login-3 .form-section p a {
-    color: #535353;
+    color: #fff;
     font-weight: 400;
 }
 
@@ -1213,7 +1220,7 @@ h6,
     font-size: 16px;
     outline: none;
     height: 50px;
-    color: #535353;
+    color: #fff;
     border-radius: 3px;
     font-weight: 500;
     border: 1px solid transparent;
@@ -1283,7 +1290,7 @@ h6,
 }
 
 .login-3 .form-section .form-check a {
-    color: #535353;
+    color: #fff;
     float: right;
 }
 
@@ -1325,12 +1332,12 @@ h6,
     margin-bottom: 0;
     font-size: 16px;
     font-weight: 400;
-    color: #535353;
+    color: #fff;
 }
 
 .login-3 .form-section a.forgot-password {
     font-size: 16px;
-    color: #535353;
+    color: #fff;
     float: right;
 }
 
@@ -1512,7 +1519,7 @@ h6,
     display: inline-block;
     font-size: 18px;
     margin-right: 20px;
-    color: #535353;
+    color: #fff;
 }
 
 .login-3 .social-list a:hover {
@@ -1670,7 +1677,7 @@ h6,
     margin-left: 0!important;
     padding-left: 25px;
     font-size: 16px;
-    color: #535353;
+    color: #fff;
 }
 
 .login-4 .form-section p a {
@@ -2523,7 +2530,7 @@ h6,
 .login-6 .login-inner-form .form-control {
     font-size: 15px;
     outline: none;
-    color: #535353;
+    color: #fff;
     border-radius: 3px;
     border: 1px solid #dbdbdb;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .06);
@@ -2589,7 +2596,7 @@ h6,
 }
 
 .login-6 .info P {
-    color: #535353;
+    color: #fff;
     font-size: 17px;
     line-height: 30px;
     margin-bottom: 0;
@@ -2633,11 +2640,11 @@ h6,
 
 .login-6 .login-inner-form p {
     margin: 0;
-    color: #535353;
+    color: #fff;
 }
 
 .login-6 .login-inner-form p a {
-    color: #535353;
+    color: #fff;
 }
 
 .login-46 .login-inner-form .btn-theme.focus,
@@ -3467,13 +3474,13 @@ h6,
 }
 
 .login-8 .login-inner-form p {
-    color: #535353;
+    color: #fff;
     margin-bottom: 0;
     font-size: 16px;
 }
 
 .login-8 .login-inner-form p a {
-    color: #535353;
+    color: #fff;
     font-weight: 500;
     margin-left: 4px;
 }
@@ -3492,11 +3499,11 @@ h6,
     margin: 0 0 35px;
     font-size: 25px;
     font-weight: 400;
-    color: #535353;
+    color: #fff;
 }
 
 .login-8 label {
-    color: #535353;
+    color: #fff;
     font-size: 16px;
     margin-bottom: 5px;
 }
@@ -3512,13 +3519,13 @@ h6,
     border: 1px solid #d6d6d6;
     background: #fff;
     outline: none;
-    color: #535353;
+    color: #fff;
     border-radius: 0;
     height: 55px;
 }
 
 .login-8 .login-inner-form .input-text label {
-    color: #535353;
+    color: #fff;
     font-size: 14px;
     font-weight: 500;
     text-align: left;
@@ -3530,7 +3537,7 @@ h6,
 }
 
 .login-8 .login-inner-form .form-check a {
-    color: #535353;
+    color: #fff;
     float: right;
 }
 
@@ -3546,7 +3553,7 @@ h6,
 
 .login-8 .login-inner-form .checkbox a {
     font-size: 16px;
-    color: #535353;
+    color: #fff;
     float: right;
 }
 
@@ -3559,7 +3566,7 @@ h6,
     margin-bottom: 0;
     font-size: 16px;
     font-weight: 500;
-    color: #535353;
+    color: #fff;
 }
 
 .login-8 .form-check-input {
@@ -4467,7 +4474,7 @@ h6,
     z-index: 1;
     position: relative;
     font-size: 14px;
-    color: #535353;
+    color: #fff;
     text-transform: capitalize;
     background: #fff;
 }
@@ -4477,14 +4484,14 @@ h6,
 }
 
 .login-10 .form-section p {
-    color: #535353;
+    color: #fff;
     margin-bottom: 0;
     font-size: 16px;
 }
 
 .login-10 .form-section p a {
     font-weight: 500;
-    color: #535353;
+    color: #fff;
 }
 
 .login-10 .form-section ul {
@@ -4565,7 +4572,7 @@ h6,
     margin-bottom: 0;
     padding-left: 25px;
     font-size: 16px;
-    color: #535353;
+    color: #fff;
 }
 
 .login-10 .form-section .form-check .form-check-input {
@@ -4573,7 +4580,7 @@ h6,
 }
 
 .login-10 .form-section .form-check a {
-    color: #535353;
+    color: #fff;
     float: right;
 }
 
@@ -4608,7 +4615,7 @@ h6,
 
 .login-10 .form-section a.forgot-password {
     font-size: 16px;
-    color: #535353;
+    color: #fff;
     float: right;
 }
 
@@ -4637,7 +4644,7 @@ h6,
 
 .login-10 .info p {
     line-height: 28px;
-    color: #535353;
+    color: #fff;
 }
 
 .login-10 .btn-theme {
@@ -4946,7 +4953,7 @@ h6,
 .login-11 .login-inner-form .forgot {
     margin: 0;
     line-height: 45px;
-    color: #535353;
+    color: #fff;
     font-size: 15px;
     float: right;
 }
@@ -5030,7 +5037,7 @@ h6,
 }
 
 .login-11:hover .info p {
-    color: #535353;
+    color: #fff;
 }
 
 .login-11:hover .info h1 {
@@ -5480,7 +5487,7 @@ h6,
 .login-12 .login-inner-form .forgot {
     margin: 0;
     line-height: 45px;
-    color: #535353;
+    color: #fff;
     font-size: 15px;
     float: right;
 }
@@ -6022,7 +6029,7 @@ h6,
 .login-13 .login-inner-form .forgot {
     margin: 0;
     line-height: 45px;
-    color: #535353;
+    color: #fff;
     font-size: 15px;
     float: right;
 }
@@ -6083,7 +6090,7 @@ h6,
 
 .login-13 .info p {
     margin-bottom: 0;
-    color: #535353;
+    color: #fff;
     line-height: 28px;
 }
 
@@ -7021,12 +7028,12 @@ h6,
     margin-bottom: 0;
     font-size: 16px;
     font-weight: 500;
-    color: #535353;
+    color: #fff;
 }
 
 .login-15 .form-section p a {
     font-weight: 500;
-    color: #535353;
+    color: #fff;
 }
 
 .login-15 .form-section ul {
@@ -7079,7 +7086,7 @@ h6,
     font-size: 16px;
     outline: none;
     height: 55px;
-    color: #535353;
+    color: #fff;
     border-radius: 0px;
     font-weight: 500;
     border: 1px solid transparent;
@@ -7125,7 +7132,7 @@ h6,
     text-decoration: blink;
     line-height: 40px;
     width: 110px;
-    color: #535353;
+    color: #fff;
     font-family: 'nunito', sans-serif;
     text-transform: uppercase;
 }
@@ -7156,7 +7163,7 @@ h6,
 }
 
 .login-15 .form-section .form-check a {
-    color: #535353;
+    color: #fff;
     float: right;
 }
 
@@ -7170,12 +7177,12 @@ h6,
     margin-bottom: 0;
     font-size: 16px;
     font-weight: 500;
-    color: #535353;
+    color: #fff;
 }
 
 .login-15 .form-section a.forgot-password {
     font-size: 16px;
-    color: #535353;
+    color: #fff;
     float: right;
     line-height: 50px;
 }
