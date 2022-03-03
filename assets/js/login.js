@@ -124,7 +124,19 @@ function login() {
         } else if (pass !== pass2) {
             showAlert("Passwords Not Matched!")
         } else {
-            fetchData()
+            fetchData('/reg', {
+                method: "POST",
+                headers: {
+                    "content-type": "application/json"
+                },
+                body: JSON.stringify({
+                    email,
+                    pass,
+                    type: "login"
+                })
+            }).then(data => {
+                window.location.href = 'login.html'
+            })
         }
     }
 }
