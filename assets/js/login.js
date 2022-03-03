@@ -132,7 +132,7 @@ function login() {
                 body: JSON.stringify({
                     email,
                     pass,
-                    type: "login"
+                    type: "reg"
                 })
             }).then(data => {
                 window.location.href = 'login.html'
