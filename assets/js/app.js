@@ -305,7 +305,7 @@ function loadNextPage() {
     if (direction == 0) {
         loadedIndex = loadedIndex - 100 <= -1 ? -1 : loadedIndex - 100
     }
-    let loadTo = loadedIndex + 50 > filteredData.length - 1 ? filteredData.length - 1 : loadedIndex + 50;
+    var loadTo = loadedIndex + 50 > filteredData.length - 1 ? filteredData.length - 1 : loadedIndex + 50;
 
     let b = 0;
     for (let a = loadedIndex + 1; a <= loadTo; a++) {
@@ -437,19 +437,9 @@ function loadNextPage() {
         }, 100 * b)
     }
     setTimeout(() => {
-        if (loadTo + 1 >= filteredData.length) {
-            loadNextBtn.classList.add("btnDisabled")
-        } else {
-            loadNextBtn.classList.remove("btnDisabled")
-            loadNextBtn.addEventListener('click', loadNextPage);
-        }
-        if (loadTo <= 49) {
-            loadPreBtn.classList.add("btnDisabled");
+        console.log(loadTo)
+        console.log(filteredData.length)
 
-        } else {
-            loadPreBtn.classList.remove("btnDisabled");
-            loadPreBtn.addEventListener('click', loadNextPage);
-        }
         loadNextBtn.innerText = "Next Page";
         loadPreBtn.innerText = "Previous Page";
         loadNextBtn.classList.remove("loading");
@@ -459,10 +449,23 @@ function loadNextPage() {
         currFooter.classList.remove("hidden2");
         currFooter.classList.add("active");
         currFooter.id = "";
-        currFooter.querySelector(".loadPreBtn").addEventListener('click', loadNextPage);
         currFooter.querySelector(".loadPreBtn").id = "footerPreBtn"
         currFooter.querySelector(".loadNextBtn").id = "footerNextBtn"
-        currFooter.querySelector(".loadNextBtn").addEventListener('click', loadNextPage);
+        if (loadTo + 1 >= filteredData.length) {
+            currFooter.querySelector(".loadNextBtn").classList.add("btnDisabled")
+
+        } else {
+            currFooter.querySelector(".loadNextBtn").classList.remove("btnDisabled")
+            currFooter.querySelector(".loadNextBtn").addEventListener('click', loadNextPage);
+        }
+        if (loadTo <= 49) {
+            currFooter.querySelector(".loadPreBtn").classList.add("btnDisabled");
+
+
+        } else {
+            currFooter.querySelector(".loadPreBtn").classList.remove("btnDisabled");
+            currFooter.querySelector(".loadPreBtn").addEventListener('click', loadNextPage);
+        }
         resetCanvasBtn.addEventListener('click', resetCanvas);
         searchBtn.addEventListener('click', runSearch);
         searchBtn.innerText = "Search";
@@ -749,3 +752,20 @@ document.querySelector(".btnLogout").addEventListener('click', () => {
     localStorage.setItem('accessToken', null);
     window.location.href = 'login.html'
 })
+
+// window.onscroll = function() { scrollFunction() };
+
+// function scrollFunction() {
+//     if (document.body.scrollTop > 2000 || document.documentElement.scrollTop > 2000) {
+//         document.querySelector(".btnTop").classList.remove("hidden");
+//     } else {
+//         document.querySelector(".btnTop").classList.add("hidden");
+//     }
+// }
+
+// // When the user clicks on the button, scroll to the top of the document
+// function topFunction() {
+//     document.body.scrollTop = 0;
+//     document.documentElement.scrollTop = 0;
+// }
+// document.querySelector(".btnTop").addEventListener('click', topFunction)
