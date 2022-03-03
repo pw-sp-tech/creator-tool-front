@@ -135,7 +135,24 @@ function login() {
                     type: "reg"
                 })
             }).then(data => {
-                alert("Successfully Registered. Please Login")
+                fetchData('/login', {
+                    method: "POST",
+                    headers: {
+                        "content-type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        email,
+                        pass,
+                        type: "login"
+                    })
+                }).then(data => {
+                    if (data.token) {
+                        localStorage.setItem('accessToken', data.token);
+                        window.location.href = "home.html";
+                    } else if (data.ERROR) {
+                        showAlert("Invalid Email or Password")
+                    }
+                })
             })
         }
     }
