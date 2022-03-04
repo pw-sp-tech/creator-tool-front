@@ -189,7 +189,7 @@ function configureFilters() {
         filterSelectStatus.append(currOption);
     });
     filterContainer.classList.remove("hidden");
-    if (params.optionalFilters.toString().length > 0) {
+    if (params.optionalFiltersColumn && params.optionalFilters.toString().length > 0) {
         let optionalFilters = params.optionalFilters.toString().split(",");
         let count = -1;
         optionalFilters.forEach(el => {
@@ -341,12 +341,13 @@ function loadNextPage() {
             let currFetchBtn = currCard.querySelector(".btnFetch");
             let currShowVidBtn = currCard.querySelector(".btnShowVid");
             //Dynamic Props************************************
-            if (params.optionalProps) {
+            if (params.optionalPropsColumn) {
                 let optionalPropsDiv = currCard.querySelector(".dynamic-props");
                 optionalPropsDiv.classList.remove("hidden")
                 let templatePropTitle = optionalPropsDiv.querySelector(".videoCardPropTitle");
                 let templatePropValue = optionalPropsDiv.querySelector(".videoCardPropValue");
                 let optionalPropsArr = params.optionalProps.split(",");
+                let optionalPropsColumns = params.optionalPropsColumn.split(",");
                 let count = -1;
                 optionalPropsArr.forEach(el => {
                     count++
@@ -355,11 +356,15 @@ function loadNextPage() {
                     let seperator = document.createElement("p")
                     seperator.innerText = ` ; `
                     currDynamicPropTitle.innerHTML = `${el} : `
-                    currDynamicPropValue.innerHTML = `${filteredData[a]["optionalProps"][count]}`;
+                    currDynamicPropTitle.setAttribute('for', optionalPropsColumns[count]);
+                    currDynamicPropValue.value = `${filteredData[a]["optionalProps"][count]}`;
+                    currDynamicPropValue.id = optionalPropsColumns[count]
                     optionalPropsDiv.append(currDynamicPropTitle)
                     optionalPropsDiv.append(currDynamicPropValue)
                     optionalPropsDiv.append(seperator)
                 })
+                templatePropTitle.remove();
+                templatePropValue.remove();
             }
 
 
@@ -516,12 +521,21 @@ function fetchTrackerData() {
                 filteredDataArr = filteredDataArr.filter(x => x[el.toString().toLowerCase().charCodeAt(0) - 97] == filter);
             }
         });
-        let optionalPropsColumns = params.optionalPropsColumn.split(",");
+        let optionalPropsColumns
+        if (params.optionalPropsColumn) {
+            optionalPropsColumns = params.optionalPropsColumn.split(",");
+        } else {
+            optionalPropsColumns = null;
+        }
+
         for (let x = 0; x < filteredDataArr.length; x++) {
             let optionPropsValueArr = [];
-            optionalPropsColumns.forEach(column => {
-                optionPropsValueArr.push(filteredDataArr[x][column.toString().toLowerCase().charCodeAt(0) - 97])
-            })
+            if (optionalPropsColumns) {
+                optionalPropsColumns.forEach(column => {
+                    optionPropsValueArr.push(filteredDataArr[x][column.toString().toLowerCase().charCodeAt(0) - 97])
+                })
+            }
+
             filteredData.push({
                 "row": filteredDataArr[x][filteredDataArr[x].length - 1] + 1,
                 "nameInSheet": filteredDataArr[x][params["videoNameColumn"].charCodeAt(0) - 97],
@@ -563,6 +577,16 @@ let submitRes = (e) => {
     let currVidId = currVideoCard.querySelector(".id").querySelector(".videoCardPropValue").innerText;
     let status = currVideoCard.querySelector(".statusSelect").selectedOptions[0].value;
     let round = currVideoCard.querySelector(".roundSelect").selectedOptions[0].value;
+    let optionalProps = currVideoCard.querySelector(".dynamic-props").querySelectorAll(".videoCardPropValue");
+    let optionalPropsValues = [];
+    let optionalPropsColumns = [];
+    optionalProps.forEach(el => {
+        if (el.value.toString().length > 0) {
+            optionalPropsValues.push(el.value);
+            optionalPropsColumns.push(el.id)
+        }
+
+    })
     let qcDuration = timeObj[currVidId]["duration"];
     let newFiles = [];
     if (!timeObj[currVidId]["isDriveFetched"] || timeObj[currVidId]["isDriveFetched"] == 0) {
@@ -589,7 +613,9 @@ let submitRes = (e) => {
                 params,
                 qcDuration,
                 newFiles,
-                currVidId
+                currVidId,
+                optionalPropsValues,
+                optionalPropsColumns
             })
         }).then(x => {
             timeObj[currVidId]["isQCed"] = 1;
@@ -753,19 +779,22 @@ document.querySelector(".btnLogout").addEventListener('click', () => {
     window.location.href = 'login.html'
 })
 
-// window.onscroll = function() { scrollFunction() };
+window.onscroll = function() { scrollFunction() };
 
-// function scrollFunction() {
-//     if (document.body.scrollTop > 2000 || document.documentElement.scrollTop > 2000) {
-//         document.querySelector(".btnTop").classList.remove("hidden");
-//     } else {
-//         document.querySelector(".btnTop").classList.add("hidden");
-//     }
-// }
+function scrollFunction() {
+    if (document.body.scrollTop > 2000 || document.documentElement.scrollTop > 2000) {
+        document.querySelector(".btnTop").classList.remove("hidden");
+    } else {
+        document.querySelector(".btnTop").classList.add("hidden");
+    }
+}
 
-// // When the user clicks on the button, scroll to the top of the document
-// function topFunction() {
-//     document.body.scrollTop = 0;
-//     document.documentElement.scrollTop = 0;
-// }
-// document.querySelector(".btnTop").addEventListener('click', topFunction)
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+    window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+    });
+}
+document.querySelector(".btnTop").addEventListener('click', topFunction)
