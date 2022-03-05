@@ -164,6 +164,9 @@ function getParameters(managerName, trackerName, subSheetName) {
             authorization: token
         }
     }).then(data => {
+        if (data.ERROR) {
+            window.location.href = 'login.html'
+        }
         data.name = qcName;
         params = data;
         params.teamData = teamData;
@@ -524,6 +527,9 @@ function fetchTrackerData() {
             authorization: token
         }
     }).then(data => {
+        if (data.ERROR) {
+            window.location.href = 'login.html'
+        }
         filteredDataArr = data;
         delete filterObj.filterSelect;
         delete filterObj["filter-copy"]
@@ -637,6 +643,9 @@ let submitRes = (e) => {
                 optionalPropsColumns
             })
         }).then(x => {
+            if (x.ERROR) {
+                window.location.href = 'login.html'
+            }
             timeObj[currVidId]["isQCed"] = 1;
             timeObj[currVidId]["status"] = status;
             timeObj[currVidId]["round"] = round;
@@ -678,6 +687,9 @@ async function fetchFromDrive(e) {
             body: JSON.stringify(objToFetch)
         })
         // let res = await axios.post(urlToFetch, JSON.stringify(objToFetch));
+    if (res.ERROR) {
+        window.location.href = 'login.html'
+    }
     target.classList.add("back-green-dark")
     timeObj[currVidId]["isDriveFetched"] = 1;
     timeObj[currVidId]["parentMatch"] = res["parentMatch"];
