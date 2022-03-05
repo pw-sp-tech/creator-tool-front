@@ -219,6 +219,11 @@ const body = document.body;
 const cardTemplate = document.querySelector(".videoCard");
 
 function resetCanvas() {
+    resetCanvasBtn.classList.add("btnDisabled")
+    loadNextBtn.removeEventListener('click', loadNextPage);
+    loadPreBtn.removeEventListener('click', loadNextPage);
+    loadNextBtn.classList.add("btnDisabled")
+    loadPreBtn.classList.add("btnDisabled")
     let id = window.setTimeout(function() {}, 0);
     while (id--) {
         window.clearTimeout(id);
@@ -286,10 +291,13 @@ let blinkUpdate = (e) => {
 
 function loadNextPage() {
     resetCanvasBtn.removeEventListener('click', resetCanvas);
-    let btnClicked = this;
-    let direction = 1;
     loadNextBtn.removeEventListener('click', loadNextPage);
     loadPreBtn.removeEventListener('click', loadNextPage);
+    resetCanvasBtn.classList.add("btnDisabled")
+    loadNextBtn.classList.add("btnDisabled")
+    loadPreBtn.classList.add("btnDisabled")
+    let btnClicked = this;
+    let direction = 1;
     if (btnClicked == loadNextBtn) {
         loadNextBtn.innerText = "Loading";
         loadNextBtn.classList.add("loading");
@@ -444,7 +452,7 @@ function loadNextPage() {
     setTimeout(() => {
         console.log(loadTo)
         console.log(filteredData.length)
-
+        resetCanvasBtn.classList.remove("btnDisabled")
         loadNextBtn.innerText = "Next Page";
         loadPreBtn.innerText = "Previous Page";
         loadNextBtn.classList.remove("loading");
