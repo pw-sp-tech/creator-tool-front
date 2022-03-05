@@ -571,10 +571,9 @@ p {
     color: red;
 }
 
-
-/* .back-red{
-       background: linear-gradient(to bottom right,#fdc639, #ff7c60);
-    } */
+.back-red {
+    background: linear-gradient(to bottom right, #fdc639, #ff7c60);
+}
 
 .back-green {
     background: linear-gradient(to right, #6DE195, #71e759);

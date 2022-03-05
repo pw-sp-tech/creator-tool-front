@@ -42,6 +42,9 @@ fetchData('/assignments', {
 }).then(data => {
     if (data.ERROR) {
         window.location.href = 'login.html'
+    } else if (data.ERR) {
+        loaderText.innerHTML = `Error while reading sheet. Please contact to your manager.`
+        return;
     }
     assignmentArr = data.assignments;
     teamData = data.teamData
@@ -166,6 +169,9 @@ function getParameters(managerName, trackerName, subSheetName) {
     }).then(data => {
         if (data.ERROR) {
             window.location.href = 'login.html'
+        } else if (data.ERR) {
+            loaderText.innerHTML = `Error while reading sheet. Please contact to your manager.`;
+            return;
         }
         data.name = qcName;
         params = data;
@@ -529,6 +535,9 @@ function fetchTrackerData() {
     }).then(data => {
         if (data.ERROR) {
             window.location.href = 'login.html'
+        } else if (data.ERR) {
+            customText.innerHTML = `Error while reading sheet. Please contact to your manager.`;
+            return;
         }
         filteredDataArr = data;
         delete filterObj.filterSelect;
@@ -650,6 +659,13 @@ let submitRes = (e) => {
         }).then(x => {
             if (x.ERROR) {
                 window.location.href = 'login.html'
+            } else if (x.ERR) {
+                info.innerHTML = `Error while writing in sheet. Please contact to your manager.`;
+                currVideoCard.classList.add("back-red");
+                info.style.color = 'red';
+                btn.innerText = "ERROR";
+                btn.classList.remove("loading");
+                return;
             }
             timeObj[currVidId]["isQCed"] = 1;
             timeObj[currVidId]["status"] = status;
