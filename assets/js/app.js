@@ -613,6 +613,10 @@ let submitRes = (e) => {
 
     })
     let qcDuration = timeObj[currVidId]["duration"];
+    let vidDuration = currVideoCard.querySelector(".duration").querySelector(".videoCardPropValue").innerText;
+    if (vidDuration == "N/A") {
+        vidDuration = "Not Fetched"
+    }
     let newFiles = [];
     if (!timeObj[currVidId]["isDriveFetched"] || timeObj[currVidId]["isDriveFetched"] == 0) {
         currVideoCard.querySelector(".btnFetch").click();
@@ -640,7 +644,8 @@ let submitRes = (e) => {
                 newFiles,
                 currVidId,
                 optionalPropsValues,
-                optionalPropsColumns
+                optionalPropsColumns,
+                vidDuration
             })
         }).then(x => {
             if (x.ERROR) {
