@@ -299,6 +299,17 @@ body {
     top: 200px;
 }
 
+.header-btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-btn-container button {
+    margin-left: 2px;
+    margin-bottom: 5px;
+}
+
 .progress {
     display: flex;
     align-items: center;
@@ -653,11 +664,6 @@ p {
     width: 95%;
     border-radius: 0 0 20px 20px;
     margin: 0 10px;
-}
-
-.btnLogout {
-    margin-bottom: 5px;
-    margin-left: 15%;
 }
 
 .hidden {

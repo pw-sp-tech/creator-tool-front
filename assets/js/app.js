@@ -95,7 +95,7 @@ managerChoice.addEventListener('change', () => {
     let currManagerValue = managerChoice.value;
     let currTrackers = []
     assignmentArr.forEach(el => {
-        if (el[2] == currManagerValue) {
+        if (el[2] == currManagerValue && !currTrackers.includes(el[5])) {
             currTrackers.push(el[5]);
         }
     })
@@ -120,7 +120,7 @@ trackerChoice.addEventListener('change', () => {
     let currTrackerValue = trackerChoice.value;
     let currSubSheets = []
     assignmentArr.forEach(el => {
-        if (el[5] == currTrackerValue) {
+        if (el[5] == currTrackerValue && !currSubSheets.includes(el[4])) {
             currSubSheets.push(el[4]);
         }
     })
@@ -458,18 +458,22 @@ function loadNextPage() {
         currFooter.querySelector(".loadNextBtn").id = "footerNextBtn"
         if (loadTo + 1 >= filteredData.length) {
             currFooter.querySelector(".loadNextBtn").classList.add("btnDisabled")
-
+            loadNextBtn.classList.add("btnDisabled")
         } else {
             currFooter.querySelector(".loadNextBtn").classList.remove("btnDisabled")
             currFooter.querySelector(".loadNextBtn").addEventListener('click', loadNextPage);
+            loadNextBtn.classList.remove("btnDisabled")
+            loadNextBtn.addEventListener('click', loadNextPage);
         }
         if (loadTo <= 49) {
             currFooter.querySelector(".loadPreBtn").classList.add("btnDisabled");
-
+            loadPreBtn.classList.add("btnDisabled");
 
         } else {
             currFooter.querySelector(".loadPreBtn").classList.remove("btnDisabled");
             currFooter.querySelector(".loadPreBtn").addEventListener('click', loadNextPage);
+            loadPreBtn.classList.remove("btnDisabled");
+            loadPreBtn.addEventListener('click', loadNextPage);
         }
         resetCanvasBtn.addEventListener('click', resetCanvas);
         searchBtn.addEventListener('click', runSearch);
@@ -797,4 +801,7 @@ function topFunction() {
         behavior: 'smooth'
     });
 }
-document.querySelector(".btnTop").addEventListener('click', topFunction)
+document.querySelector(".btnTop").addEventListener('click', topFunction);
+document.querySelector(".btnSwitchTracker").addEventListener('click', () => {
+    window.location.reload();
+});
