@@ -464,25 +464,32 @@ function loadNextPage() {
         currFooter.id = "";
         currFooter.querySelector(".loadPreBtn").id = "footerPreBtn"
         currFooter.querySelector(".loadNextBtn").id = "footerNextBtn"
-        if (loadTo + 1 >= filteredData.length) {
-            currFooter.querySelector(".loadNextBtn").classList.add("btnDisabled")
-            loadNextBtn.classList.add("btnDisabled")
-        } else {
-            currFooter.querySelector(".loadNextBtn").classList.remove("btnDisabled")
-            currFooter.querySelector(".loadNextBtn").addEventListener('click', loadNextPage);
-            loadNextBtn.classList.remove("btnDisabled")
-            loadNextBtn.addEventListener('click', loadNextPage);
-        }
-        if (loadTo <= 49) {
-            currFooter.querySelector(".loadPreBtn").classList.add("btnDisabled");
+        if (filteredData.length < 50) {
+            currFooter.innerHTML = `<h2>END OF RESULTS!</h2>`
+            loadNextBtn.classList.add("btnDisabled");
             loadPreBtn.classList.add("btnDisabled");
-
         } else {
-            currFooter.querySelector(".loadPreBtn").classList.remove("btnDisabled");
-            currFooter.querySelector(".loadPreBtn").addEventListener('click', loadNextPage);
-            loadPreBtn.classList.remove("btnDisabled");
-            loadPreBtn.addEventListener('click', loadNextPage);
+            if (loadTo + 1 >= filteredData.length) {
+                currFooter.querySelector(".loadNextBtn").classList.add("btnDisabled")
+                loadNextBtn.classList.add("btnDisabled")
+            } else {
+                currFooter.querySelector(".loadNextBtn").classList.remove("btnDisabled")
+                currFooter.querySelector(".loadNextBtn").addEventListener('click', loadNextPage);
+                loadNextBtn.classList.remove("btnDisabled")
+                loadNextBtn.addEventListener('click', loadNextPage);
+            }
+            if (loadTo <= 49) {
+                currFooter.querySelector(".loadPreBtn").classList.add("btnDisabled");
+                loadPreBtn.classList.add("btnDisabled");
+
+            } else {
+                currFooter.querySelector(".loadPreBtn").classList.remove("btnDisabled");
+                currFooter.querySelector(".loadPreBtn").addEventListener('click', loadNextPage);
+                loadPreBtn.classList.remove("btnDisabled");
+                loadPreBtn.addEventListener('click', loadNextPage);
+            }
         }
+
         resetCanvasBtn.addEventListener('click', resetCanvas);
         searchBtn.addEventListener('click', runSearch);
         searchBtn.innerText = "Search";
