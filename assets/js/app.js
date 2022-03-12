@@ -717,7 +717,7 @@ async function fetchFromDrive(e) {
     timeObj[currVidId]["parentMatch"] = res["parentMatch"];
     timeObj[currVidId]["pathShouldBe"] = res["pathShouldBe"];
     timeObj[currVidId]["nameActual"] = res["nameActual"];
-    if (res["parentMatch"] == 0) {
+    if (res["parentMatch"] == 0 && res["pathShouldBe"]) {
         currVideoCard.querySelector(".pathShouldBe").classList.remove("hidden")
         let pathShouldBe = currVideoCard.querySelector(".pathShouldBe").querySelector(".videoCardPropValue")
         pathShouldBe.innerText = res["pathShouldBe"];
