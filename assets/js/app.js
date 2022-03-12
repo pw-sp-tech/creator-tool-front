@@ -708,9 +708,6 @@ async function fetchFromDrive(e) {
             body: JSON.stringify(objToFetch)
         })
         // let res = await axios.post(urlToFetch, JSON.stringify(objToFetch));
-    if (res.ERROR) {
-        window.location.href = 'login.html'
-    }
     if (res.ERR) {
         target.innerText = "ERROR";
         target.classList.remove("loading");
