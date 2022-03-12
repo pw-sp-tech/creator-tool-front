@@ -699,7 +699,7 @@ async function fetchFromDrive(e) {
         nameInSheet: currNameInSheet,
         folderURL
     }
-    let res = await fetchData('/fetchdrive', {
+    let res = await fetchData('/testdrive', {
             method: "POST",
             headers: {
                 authorization: token,
@@ -710,6 +710,10 @@ async function fetchFromDrive(e) {
         // let res = await axios.post(urlToFetch, JSON.stringify(objToFetch));
     if (res.ERROR) {
         window.location.href = 'login.html'
+    }
+    if (res.ERR) {
+        target.innerText = "ERROR";
+        target.classList.remove("loading");
     }
     target.classList.add("back-green-dark")
     timeObj[currVidId]["isDriveFetched"] = 1;
@@ -775,7 +779,7 @@ async function fetchFromDrive(e) {
     }
     format.parentElement.click();
     timeObj[currVidId]["format"] = res["format"];
-    if (res["format"] == params.desiredVideoFormat) {
+    if (params.desiredVideoFormat.includes(res["format"])) {
         format.classList.add("passed");
         format.classList.remove("failed")
     } else {
