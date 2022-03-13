@@ -252,7 +252,7 @@ function resetCanvas() {
     }
 }
 let togglePlayer = (e) => {
-    let allVideoShowBtns = document.querySelectorAll(".active").forEach((x) => {
+    document.querySelectorAll(".active").forEach((x) => {
         let currBtn = x.querySelector(".btnShowVid");
         if (currBtn != e.target && currBtn && currBtn.innerText == "Hide Video") {
             currBtn.click();
@@ -262,9 +262,9 @@ let togglePlayer = (e) => {
     let currShowVidBtnText = currShowVidBtn.innerText;
     let currVideoCard = e.target.parentElement.parentElement;
     let currVidId = currVideoCard.querySelector(".id").innerText;
-    if (!timeObj[currVidId]["isDriveFetched"] || timeObj[currVidId]["isDriveFetched"] == 0) {
-        currVideoCard.querySelector(".btnFetch").click();
-    }
+    // if (!timeObj[currVidId]["isDriveFetched"] || timeObj[currVidId]["isDriveFetched"] == 0) {
+    //     currVideoCard.querySelector(".btnFetch").click();
+    // }
     let currFrame = currVideoCard.querySelector("iframe");
     currShowVidBtn.removeEventListener('click', togglePlayer);
     setTimeout(() => {
@@ -625,9 +625,9 @@ let submitRes = (e) => {
         vidDuration = "Not Fetched"
     }
     let newFiles = [];
-    if (!timeObj[currVidId]["isDriveFetched"] || timeObj[currVidId]["isDriveFetched"] == 0) {
-        currVideoCard.querySelector(".btnFetch").click();
-    }
+    // if (!timeObj[currVidId]["isDriveFetched"] || timeObj[currVidId]["isDriveFetched"] == 0) {
+    //     currVideoCard.querySelector(".btnFetch").click();
+    // }
     if (timeObj[currVidId]["newFiles"]) {
         newFiles = timeObj[currVidId]["newFiles"];
     }
