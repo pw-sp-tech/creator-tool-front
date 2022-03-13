@@ -176,7 +176,7 @@ function getParameters(managerName, trackerName, subSheetName) {
         data.name = qcName;
         params = data;
         params.teamData = teamData;
-        console.log(params)
+
         trackerNameHeader.innerHTML = data.trackerName;
         sheetNameHeader.innerHTML = data.sheetName;
         qcPersonHeader.innerHTML = `Welcome, ${qcName}`;
@@ -288,7 +288,7 @@ let togglePlayer = (e) => {
         }, 1000);
         //Start From Here
     }
-    console.log(timeObj)
+
 }
 let blinkUpdate = (e) => {
     let target = e.target;
@@ -459,8 +459,6 @@ function loadNextPage() {
         }, 100 * b)
     }
     setTimeout(() => {
-        console.log(loadTo)
-        console.log(filteredData.length)
         resetCanvasBtn.classList.remove("btnDisabled")
         loadNextBtn.innerText = "Next Page";
         loadPreBtn.innerText = "Previous Page";
@@ -820,7 +818,10 @@ async function fetchFromDrive(e) {
     // }
     let notMatchedFields = [];
     currVideoCard.querySelectorAll(".failed").forEach((x) => {
-        notMatchedFields.push(x.previousElementSibling.innerText.replace(":", ""));
+        let currNotMatched = x.previousElementSibling.innerText.replace(":", "");
+        currNotMatched = currNotMatched.replace("(Actual)", "");
+        notMatchedFields.push(currNotMatched);
+
     });
     if (notMatchedFields.length > 0) {
         currVideoCard.querySelector(".comment_textarea").value = `Found error in : ${notMatchedFields.join(", ")}, ${currVideoCard.querySelector(".comment_textarea").value}`
