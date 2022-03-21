@@ -4,6 +4,15 @@ async function fetchData(url, params) {
     let res = await fetch(`${urlPrefix}${url}`, params);
     return await res.json();
 }
+
+function letterToColumn(letter) {
+    var column = 0,
+        length = letter.length;
+    for (var i = 0; i < length; i++) {
+        column += (letter.toUpperCase().charCodeAt(i) - 64) * Math.pow(26, length - i - 1);
+    }
+    return column;
+}
 const rings = document.querySelectorAll(".ring");
 const loaderBox = document.querySelector(".loader-box");
 const loaderText = document.querySelector(".loader-text");
@@ -550,7 +559,7 @@ function fetchTrackerData() {
                 if (filter == "Not Picked") {
                     filter = ''
                 }
-                filteredDataArr = filteredDataArr.filter(x => x[el.toString().toLowerCase().charCodeAt(0) - 97] == filter);
+                filteredDataArr = filteredDataArr.filter(x => x[parseInt(letterToColumn(el)) - 1] == filter);
             }
         });
         let optionalPropsColumns
@@ -564,21 +573,21 @@ function fetchTrackerData() {
             let optionPropsValueArr = [];
             if (optionalPropsColumns) {
                 optionalPropsColumns.forEach(column => {
-                    optionPropsValueArr.push(filteredDataArr[x][column.toString().toLowerCase().charCodeAt(0) - 97])
+                    optionPropsValueArr.push(filteredDataArr[x][parseInt(letterToColumn(column)) - 1])
                 })
             }
 
             filteredData.push({
                 "row": filteredDataArr[x][filteredDataArr[x].length - 1] + 1,
-                "nameInSheet": filteredDataArr[x][params["videoNameColumn"].charCodeAt(0) - 97],
-                "verUploaded": filteredDataArr[x][params["verUploadedColumn"].charCodeAt(0) - 97],
-                "verQCed": params["verQCedColumn"].charCodeAt(0) - 97 ? filteredDataArr[x][params["verQCedColumn"].charCodeAt(0) - 97] : "Column Not Specified",
-                "qcStatus": filteredDataArr[x][params["qcStatusColumn"].charCodeAt(0) - 97],
-                "URL": filteredDataArr[x][params["videoLinkColumn"].charCodeAt(0) - 97],
-                "qcComment": filteredDataArr[x][params["qcCommentColumn"].charCodeAt(0) - 97],
-                "parentURL": filteredDataArr[x][params["desiredDriveLocationColumn"].charCodeAt(0) - 97],
-                "educatorFeedback": params["educatorFeedbackColumn"].charCodeAt(0) - 97 ? filteredDataArr[x][params["educatorFeedbackColumn"].charCodeAt(0) - 97] : "Column Not Specified",
-                "educatorName": params["EducatorNameColumn"].charCodeAt(0) - 97 ? filteredDataArr[x][params["EducatorNameColumn"].charCodeAt(0) - 97] : "Column Not Specified",
+                "nameInSheet": filteredDataArr[x][parseInt(letterToColumn(params["videoNameColumn"])) - 1],
+                "verUploaded": filteredDataArr[x][parseInt(letterToColumn(params["verUploadedColumn"])) - 1],
+                "verQCed": parseInt(letterToColumn(params["verQCedColumn"])) - 1 ? filteredDataArr[x][parseInt(letterToColumn(params["verQCedColumn"])) - 1] : "Column Not Specified",
+                "qcStatus": filteredDataArr[x][parseInt(letterToColumn(params["qcStatusColumn"])) - 1],
+                "URL": filteredDataArr[x][parseInt(letterToColumn(params["videoLinkColumn"])) - 1],
+                "qcComment": filteredDataArr[x][parseInt(letterToColumn(params["qcCommentColumn"])) - 1],
+                "parentURL": filteredDataArr[x][parseInt(letterToColumn(params["desiredDriveLocationColumn"])) - 1],
+                "educatorFeedback": parseInt(letterToColumn(params["educatorFeedbackColumn"])) - 1 ? filteredDataArr[x][parseInt(letterToColumn(params["educatorFeedbackColumn"])) - 1] : "Column Not Specified",
+                "educatorName": parseInt(letterToColumn(params["EducatorNameColumn"])) - 1 ? filteredDataArr[x][parseInt(letterToColumn(params["EducatorNameColumn"])) - 1] : "Column Not Specified",
                 "optionalProps": optionPropsValueArr
             })
 
