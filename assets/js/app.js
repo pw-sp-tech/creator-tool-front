@@ -581,7 +581,7 @@ function fetchTrackerData() {
                 "row": filteredDataArr[x][filteredDataArr[x].length - 1] + 1,
                 "nameInSheet": filteredDataArr[x][parseInt(letterToColumn(params["videoNameColumn"])) - 1],
                 "verUploaded": filteredDataArr[x][parseInt(letterToColumn(params["verUploadedColumn"])) - 1],
-                "verQCed": parseInt(letterToColumn(params["verQCedColumn"])) - 1 ? filteredDataArr[x][parseInt(letterToColumn(params["verQCedColumn"])) - 1] : "Column Not Specified",
+                "verQCed": params["verQCedColumn"] ? filteredDataArr[x][parseInt(letterToColumn(params["verQCedColumn"])) - 1] : "N/A",
                 "qcStatus": filteredDataArr[x][parseInt(letterToColumn(params["qcStatusColumn"])) - 1],
                 "URL": filteredDataArr[x][parseInt(letterToColumn(params["videoLinkColumn"])) - 1],
                 "qcComment": filteredDataArr[x][parseInt(letterToColumn(params["qcCommentColumn"])) - 1],
@@ -592,7 +592,6 @@ function fetchTrackerData() {
             })
 
         }
-        console.log(filteredData)
         loadNextBtn.classList.remove("hidden");
         loadPreBtn.classList.remove("hidden");
         resetCanvasBtn.classList.remove("hidden");
