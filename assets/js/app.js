@@ -730,14 +730,14 @@ async function fetchFromDrive(e) {
 
     }
 
-    if (res["newFiles"].length > 0 && res["newFiles"].length < 2) {
+    if (res["newFiles"] && res["newFiles"].length > 0 && res["newFiles"].length < 2) {
         timeObj[currVidId]["newFiles"] = res["newFiles"];
         currVideoCard.querySelector(".newFiles").classList.remove("hidden")
         let newFiles = currVideoCard.querySelector(".newFiles").querySelector(".videoCardPropValue")
         newFiles.innerText = `Found ${res["duplicateFounds"]} duplicate video(s) including 1 newer video.`;
         newFiles.classList.add("failed")
         newFiles.classList.remove("passed")
-    } else if (res["newFiles"].length > 0) {
+    } else if (res["newFiles"] && res["newFiles"].length > 0) {
         timeObj[currVidId]["newFiles"] = res["newFiles"];
         currVideoCard.querySelector(".newFiles").classList.remove("hidden")
         let newFiles = currVideoCard.querySelector(".newFiles").querySelector(".videoCardPropValue")
