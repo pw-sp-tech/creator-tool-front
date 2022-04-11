@@ -673,3 +673,7 @@ p {
 .yellow {
     color: yellow;
 }
+.show-count-div{
+    padding: 20px;
+    color: red;
+}

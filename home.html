@@ -5,173 +5,132 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="https://img.icons8.com/external-anggara-flat-anggara-putra/32/000000/external-video-interface-anggara-flat-anggara-putra.png">
+    <link rel="shortcut icon" href="assets/img/fevicon.png" type="image/png">
     <!-- Google fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- Custom Stylesheet -->
-    <link type="text/css" rel="stylesheet" href="assets/css/main.css">
-    <title>PW Video QC</title>
+    <link rel="stylesheet" href="light.css">
+    <link rel="stylesheet" href="main.css">
+    <title>PW Creators' Tool</title>
 </head>
 
 <body>
-    <header class="headerContainer hidden">
-        <div class="welcome">
-            <h2>Welcome,</h2>
-        </div>
-        <div>
-            <p class="headerProp" id="trackerName">
-                <span class="headerPropTitle">Tracker Name: </span><span class="headerPropValue"></span>
-            </p>
-            <p class="headerProp" id="sheetName">
-                <span class="headerPropTitle">Sheet Name: </span><span class="headerPropValue"></span>
-            </p>
-        </div>
-        <div class="header-btn-container">
-            <button class="btnSwitchTracker">Switch Tracker <i class="fa fa-arrows-repeat"></i></button>
-            <button class="btnLogout">Logout <i class="fa fa-sign-out" ></i></button>
-        </div>
-    </header>
-    <div class="progress">
-        <div class="progressBar"></div>
-        <p class="progressNum"></p>
-    </div>
-    <div class="loader-box hidden">
+    <div class="loader-box verifyWindow">
         <div class="ring"></div>
         <div class="ring"></div>
         <div class="ring"></div>
-        <p class="loader-text" style="top: 150px; width: 60%;text-align: center;">Verifying User...</p>
-        <div class="choices hidden">
-            <select class="manager-choice">
-                <option value="" hidden selected disabled>Select Manager Name&nbsp;&#9660;</option>
-               
-            </select>
-            <select class="tracker-choice" disabled>
-                <option value="" hidden selected disabled>Select Tracker Name&nbsp;&#9660;</option>
-               
-            </select>
-            <select class="subSheet-choice" disabled>
-                <option value="" hidden selected disabled>Select SubSheet Name&nbsp;&#9660;</option>
-            </select>
-            <button class="choice-btn hidden">Search</button>
-        </div>
-    </div>
-
-
-    <div class="dynamic-filter-container filterContainer hidden">
-        <label for="filterSelect">Filter Results By:</label>
-        <select class="filterSelect" id="filterSelect">
-                <option value="" hidden selected disabled>Filter By Status&nbsp;&#9660;</option>
-                <option value="Not Picked">Not Picked</option>
-            </select>
-        <select class="dynamic-filterSelect hidden" id="filter-copy">
-                <option value="" hidden selected disabled>Filter By&nbsp;&#9660;</option>
-            </select>
+        <p class="loader-text" style="top: 150px; width: 60%;text-align: center;">Welcome...</p>
 
     </div>
-    <div class="filterBtnContainer hidden2">
+    <div class="loader-mini loadingWindow hidden">
+        <div class="ring"></div>
+        <div class="ring"></div>
+        <div class="ring"></div>
+        <p class="loader-text" style="top: 150px; width: 60%;text-align: center;">Please wait...</p>
 
-        <button class="searchBtn">Search</button>
-        <button class="loadPreBtn hidden">Previous Page</button>
-        <button class="loadNextBtn hidden">Next Page</button>
-        <button class="resetCanvasBtn hidden">Reset Canvas</button>
-        <div class="info hidden2">
-            <h2>Search taking longer than usual. Please close the window and try again.</h2>
-        </div>
     </div>
-    <div class="filterContainer footer hidden2" id="footer">
-        <button class="loadPreBtn ">Previous Page</button>
-        <button class="loadNextBtn ">Next Page</button>
-    </div>
-    <div class="customTextCard hidden">
-        <p class="customText">Select a filter and click search.</p>
-    </div>
-    <div class="videoCard hidden">
-        <div class="vidPropContainer">
-            <div class="videoCardProp vidNameProp">
-                <p class="rowInSheet l">
-                    <span class="videoCardPropTitle">Row In Sheet: </span><span class="videoCardPropValue">16</span>
-                </p>
-                <p class="nameInSheet l">
-                    <span class="videoCardPropTitle">Name(In Sheet): </span><span class="videoCardPropValue">HGCNC11CU01BEUDTQ016</span>
-                </p>
-                <p class="nameActual l">
-                    <span class="videoCardPropTitle">Name(Actual): </span><span class="videoCardPropValue">N/A</span>
-                </p>
-                <p class="id l hidden"><span class="videoCardPropTitle"></span><span class="videoCardPropValue"></span></p>
-                <p class="parentURL l hidden"><span class="videoCardPropTitle"></span><span class="videoCardPropValue"></span>
-                </p>
+    <div class="home-window hidden">
+        <nav class="navbar">
+            <h1 class="welcomeText">Welcome, <span class="welcomeName"></span></h1>
+            <div class="pageSwitchContainer">
+                <span class="workspaceSwitch pageSwitch active curser-pointer">Workspace</span>
+                <span class="teamSwitch pageSwitch curser-pointer">Manage Team</span>
             </div>
-            <div class="videoCardProp vidQCProp">
-                <p class="verUploaded l">
-                    <span class="videoCardPropTitle">Version(Uploaded): </span><span class="videoCardPropValue">Round 2</span>
-                </p>
-                <p class="verQCed l">
-                    <span class="videoCardPropTitle">Version(QCed):  </span><span class="videoCardPropValue">Round 1</span>
-                </p>
-                <p class="qcStatus l">
-                    <span class="videoCardPropTitle">QC Status: </span><span class="videoCardPropValue">Round 1 Rejected</span>
-                </p>
+            <div class="actionBtns">
+                <button class="switch-mode">Light Mode ☀</button>
+                <button class="actionBtn btnLogout">Logout</button>
             </div>
-            <div class="videoCardProp vidAttrProp">
-                <p class="owner l">
-                    <span class="videoCardPropTitle">Owner: </span><span class="videoCardPropValue">Not Fetched</span>
-                </p>
-                <p class="educatorName">
-                    <span class="videoCardPropTitle">Educator: </span><span class="videoCardPropValue">Ramavtar Chhaba</span>
-                </p>
-                <p class="format s"><span class="videoCardPropTitle">Format: </span><span class="videoCardPropValue">N/A</span>
-                </p>
-                <p class="videoSize s"><span class="videoCardPropTitle">Size: </span><span class="videoCardPropValue">N/A</span>
-                </p>
-                <p class="duration s">
-                    <span class="videoCardPropTitle">Length: </span><span class="videoCardPropValue">N/A</span>
-                </p>
-                <p class="dim s"><span class="videoCardPropTitle">Dim: </span><span class="videoCardPropValue">N/A</span></p>
+        </nav>
+        <div class="header">
+            <div class="filterContainer">
+                <span class="filter curser-pointer navbar__list pending active">Pending</span>
+                <span class="filter curser-pointer navbar__list rejected">Rejected</span>
+                <span class="filter curser-pointer navbar__list qc-progress">QC In Progress</span>
             </div>
-            <p class="videoCardProp qcComment videoCardPropFull">
-                <span class="videoCardPropTitle">QC Comment: </span><span class="videoCardPropValue"></span>
-            </p>
-            <p class="videoCardProp educatorFeedback videoCardPropFull">
-                <span class="videoCardPropTitle">Educator Feedback: </span><span class="videoCardPropValue"></span>
-            </p>
-            <p class="videoCardProp pathActual videoCardPropFull">
-                <span class="videoCardPropTitle">Path(Actual): </span><span class="videoCardPropValue">N/A</span>
-            </p>
-            <p class="videoCardProp pathShouldBe videoCardPropFull hidden">
-                <span class="videoCardPropTitle">Path(Should Be): </span><span class="videoCardPropValue"></span>
-            </p>
-            <p class="videoCardProp newFiles videoCardPropFull hidden">
-                <span class="videoCardPropTitle">Duplicate Check: </span><span class="videoCardPropValue"></span>
-            </p>
-            <p class="dynamic-props videoCardProp videoCardPropFull hidden">
-                <label for="" class="videoCardPropTitle" style="margin-left: 5px;"></label><input class="videoCardPropValue" style="margin-right: 10px;"></input>
-            </p>
-        </div>
-
-        <iframe srcdoc="main" sandbox="allow-same-origin allow-scripts allow-popups allow-forms" class="frame hidden2" scrolling="no" frameborder="0" allowfullscreen></iframe>
-        <div class="action">
-            <textarea class="comment_textarea" cols="60" rows="5" placeholder="Type Your Comment..."></textarea>
-            <select class="statusSelect">
-                    <option value=""  selected disabled hidden >Click to choose status&nbsp;&#9660;</option>
+            <div>
+                <span>Switch Book ►</span>
+                <select class="books">
                 </select>
-            <select class="roundSelect">
-                    <option value=""  selected disabled hidden >Click to choose round&nbsp;&#9660;</option>
-                </select>
+            </div>
+        </div>
 
-            <button class="btnSubmit btnAction">Submit QC</button>
-            <button class="btnFetch btnAction">Fetch Details</button>
-            <button class="btnShowVid btnAction">Open Video</button>
+        <div class="show-count-div ">
+            <h2 class="show-count-divh2"></h2>
+        </div>
+
+        <div class="popup hidden" style="color: black;">
+            <h2 class="title" style="color: black;">QC History</h2>
+            <div class="qcPopup hidden">
+                <div class="roundSwitchContainer">
+                    <span class="newHistory curser-pointer ">←</span>
+                    <span class="round">Round 2</span>
+                    <span class="oldHistory curser-pointer">→</span>
+                </div>
+                <span class="status">Rejected</span>
+                <span class="comment">Please explain it well. Background noise at 5:44 and low light in whole
+                    video.</span>
+                <!-- <span class="uploadTime">Uploaded at : Apr 6, 2022 15:00:00</span> -->
+                <span class="QCTime">Checked at : Apr 7, 2022 18:00:00</span>
+                <span class="downloadBtn">Download</span>
+            </div>
+            <div class="quePopup hidden">
+                <img class="waitImage" src=""></img>
+            </div>
+            <div class="vidPopup hidden"><video controls autoplay class="video-link" src=""></video></div>
+            <div class="feedbackPopup hidden">
+                <select class="issueSelect">
+                    <option value="" hidden selected disabled>Select an issue</option>
+                    <option value="NCERT Question">NCERT Question</option>
+                    <option value="Multiple Parts">Multiple Parts</option>
+                    <option value="Incorrect Question">Incorrect Question</option>
+                    <option value="Watermark Present">Watermark Present</option>
+                    <option value="Other">Other</option>
+                </select>
+                <textarea class="feedbackReason hidden" placeholder="Type your feedback here..."></textarea>
+                <button class="error-btn">Submit Feedback</button>
+            </div>
+        </div>
+        <div class="overlay hidden"></div>
+        <div class="tileContainer">
+            <div class="tile hidden">
+                <div class="propContainer ">
+                    <div class="prop"><span class="propName">Chapter : <span class="propValue chapter-name">Number
+                                Systems</span></span>
+                    </div>
+                    <div class="prop"><span class="propName">Quetion Type : <span
+                                class="propValue question-type">UDT</span></span>
+                    </div>
+                    <div class="prop"><span class="propName">Video Name : <span
+                                class="propValue video-name">HGMMAO09CC01E1UDTQ001</span></span>
+                    </div>
+                    <div class="prop deadline-div"><span class="propName ">Deadline : <span class="propValue demo deadline"
+                                id="demo"></span></span>
+                    </div>
+                    <div class="prop"><span class="propName video-name-div">Video Selected : <span
+                                class="propValue videoSelected">None</span></span>
+                    </div>
+                    <button class="previewBeforeSubmit hidden">Play ►</button>
+                </div>
+                <div class="tileAction">
+                    <button class="viewQue view-question-btn">View Question</button>
+                    <button class="viewQue qc-history-btn">View QC History</button>
+                    <button class="viewQue preview-btn">Preview Video</button>
+                    <button class="viewQue feedback-btn">Question Feedback</button>
+                    <form action="" class="videoUploadForm">
+                        <input type="hidden" class="videoName" value="videoName">
+                        <label class="videoInputLable"><input type="file" class="videoInput hidden">Choose Video</label>
+                        <p class="row-num hidden"></p>
+                        <p class="sme-round hidden"></p>
+                        <button type="submit">Submit Video</button>
+                    </form>
+
+                    <label class="uploading-loader hidden"> Uploading...</label>
+                </div>
+            </div>
         </div>
     </div>
-    <span style="min-width: none;" class="btnTop hidden">▲</span>
 </body>
-<!-- External JS libraries -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.26.0/axios.min.js"></script>
-<script src="assets/js/jquery-3.6.0.min.js"></script>
-<script src="assets/js/bootstrap.bundle.min.js"></script>
-<script src="assets/js/jquery.validate.min.js"></script>
-<script src="assets/js/app.js"></script>
-<!-- Custom JS Script -->
+<script src="util.js"></script>
+<script src="js.js"></script>
 
 </html>

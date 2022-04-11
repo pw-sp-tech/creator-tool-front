@@ -44,7 +44,7 @@ $(function() {
         }
     });
 })
-const urlPrefix = 'https://pw-qc-back.herokuapp.com'
+const urlPrefix = 'https://creator-tool-back.herokuapp.com'
 const fullNameDiv = document.querySelector(".fullname-div");
 const emailDiv = document.querySelector(".email-div");
 const passDiv = document.querySelector(".pass-div");
@@ -96,19 +96,21 @@ function login() {
     if (id === "1") {
         let email = emailDiv.querySelector('input').value;
         let pass = passDiv.querySelector('input').value;
-        fetchData('/login', {
+        fetchData('/auth/signin', {
             method: "POST",
             headers: {
                 "content-type": "application/json"
             },
             body: JSON.stringify({
-                email,
-                pass,
-                type: "login"
+                "email": email,
+                "password":pass,
+                
             })
         }).then(data => {
-            if (data.token) {
-                localStorage.setItem('accessToken', data.token);
+            if (data.user.token ) {
+                localStorage.setItem('accessToken', data.user.token);
+                localStorage.setItem("userName",data.user.fullName);
+                localStorage.setItem("userEmail",data.user.email)
                 window.location.href = "home.html";
             } else if (data.ERROR) {
                 showAlert("Invalid Email or Password")
@@ -124,18 +126,20 @@ function login() {
         } else if (pass !== pass2) {
             showAlert("Passwords Not Matched!")
         } else {
-            fetchData('/login', {
+            fetchData('/auth/signup', {
                 method: "POST",
                 headers: {
                     "content-type": "application/json"
                 },
                 body: JSON.stringify({
-                    email,
-                    pass,
-                    type: "reg"
+                    "fullName": name,
+                    "email":email,
+                    "password":pass,
+                    
                 })
             }).then(data => {
-                window.location.href = 'login.html'
+                if(data.msg=="Successfully Signed Up"){
+                window.location.href = 'login.html'}
             })
         }
     }
