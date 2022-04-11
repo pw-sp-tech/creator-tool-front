@@ -560,7 +560,11 @@ function previewVideo(el, isFile) {
     if (isFile) {
         var link = el
     } else {
-        var link = el[12]
+        var Drivelink = el[12].toString();
+        var regExMatch = Drivelink.match(/[-\w]{25,}/);
+        if (regExMatch) {
+            var link = 'https://drive.google.com/uc?export=download&id=' + regExMatch[0];
+        }
     }
 
     popup.querySelector(".video-link").src = link
