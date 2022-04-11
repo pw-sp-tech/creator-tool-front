@@ -431,7 +431,7 @@ function uploadvideo(e) {
             if (data.SUCCESS) {
                 var sheetId = getId(currentSheetLink);
                 // this.removeEventListener("submit", uploadvideo);
-                var link = `https://drive.google.com/uc?export=preview&id=${data.id}`
+                var link = `https://drive.google.com/file/d/${data.id}/view?usp=sharing`
                 var date = createSerialNum()
                 var range = [`Supply!M${rowNum}`, `Supply!N${rowNum}`, `Supply!O${rowNum}`, `Supply!R${rowNum}`, `Supply!S${rowNum}`, `Supply!V${rowNum}`, `Supply!X${rowNum}`];
                 var value = [link, "Answered", true, date, "[QC]Round1", `${fileSize} MB`, date];
