@@ -182,7 +182,8 @@ fetchData("/user/verify", {
     }),
 }).then((data) => {
     if (data.ERROR == "USER_NOT_FOUND") {
-        loaderText.innerHTML = "USER_NOT_FOUND"
+        loaderText.innerHTML = "You're not authorized to use this app. If this is a mistake, Please contact to your manager."
+        document.querySelector(".loader-box").remove()
     } else {
         loaderText.innerHTML = `Please Wait, ${String(data.name).split(" ")[0]
       }.Getting your assignment`;
