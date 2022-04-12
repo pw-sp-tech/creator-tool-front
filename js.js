@@ -38,7 +38,6 @@ function deadline(sheetdate) {
         // clearInterval(x);
         return "EXPIRED";
     } else {
-        // Display the result in the element with id="demo"
         return toReturn
     }
 }
