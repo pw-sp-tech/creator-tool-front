@@ -376,6 +376,7 @@ function sendFeedback(el) {
 }
 
 function popupHide() {
+    document.querySelector(".feedbackReason").classList.add("hidden")
     popup.querySelector(".video-link").src = ""
     overlay.classList.add("hidden")
     popup.classList.add("hidden")
@@ -533,11 +534,11 @@ function showQcHistory(el) {
     popup.querySelector(".oldHistory").style.opacity = "0";
     popup.classList.remove("hidden");
     overlay.classList.remove("hidden")
-    popup.querySelector(".title").innerText = "Qc History"
+    popup.querySelector(".title").innerText = "QC History"
     popup.querySelector(".qcPopup").classList.remove("hidden")
-    popup.querySelector(".round").innerText = "Qc Round 1"
+    popup.querySelector(".round").innerText = "Round 1"
     popup.querySelector(".comment").innerText = el[19]
-    popup.querySelector(".QCTime").innerText = `Checked at :${el[17]}`
+    popup.querySelector(".QCTime").innerText = `QC Time : ${el[17]}`
     if (el[15] == "[SME]Round3") {
         popup.querySelector(".newHistory").style.opacity = "1";
         popup.querySelector(".newHistory").addEventListener("click", () => showNewHistory(el))
@@ -549,9 +550,9 @@ function showQcHistory(el) {
 function showNewHistory(el) {
     popup.querySelector(".newHistory").style.opacity = "0";
     popup.querySelector(".oldHistory").style.opacity = "1";
-    popup.querySelector(".round").innerText = "Qc Round 2"
+    popup.querySelector(".round").innerText = "Round 2"
     popup.querySelector(".comment").innerText = el[23]
-    popup.querySelector(".QCTime").innerText = `Checked at :${el[21]}`
+    popup.querySelector(".QCTime").innerText = `QC Time : ${el[21]}`
     popup.querySelector(".oldHistory").addEventListener("click", () => showQcHistory(el))
 }
 
@@ -642,19 +643,20 @@ function setInQcData(arr) {
 }
 
 function showQcHistory2(el) {
+    console.log(el)
     popupHide()
     popup.querySelector(".newHistory").style.opacity = "0"
     popup.querySelector(".oldHistory").style.opacity = "0";
     popup.classList.remove("hidden");
     overlay.classList.remove("hidden")
     if (el[15] == "[QC]Round1") {
-        popup.querySelector(".title").innerText = "No Qc History"
+        popup.querySelector(".title").innerText = "No QC History"
     } else {
-        popup.querySelector(".title").innerText = "Qc History"
+        popup.querySelector(".title").innerText = "QC History"
         popup.querySelector(".qcPopup").classList.remove("hidden")
-        popup.querySelector(".round").innerText = "Qc Round 1"
+        popup.querySelector(".round").innerText = "Round 1"
         popup.querySelector(".comment").innerText = el[19]
-        popup.querySelector(".QCTime").innerText = `Checked at :${el[17]}`
+        popup.querySelector(".QCTime").innerText = `QC Time : ${el[17]}`
         if (el[15] == "[QC]Round3") {
             popup.querySelector(".newHistory").style.opacity = "1";
             popup.querySelector(".newHistory").addEventListener("click", () => showNewHistory2(el))
@@ -665,10 +667,11 @@ function showQcHistory2(el) {
 }
 
 function showNewHistory2(el) {
+    console.log(el)
     popup.querySelector(".newHistory").style.opacity = "0";
     popup.querySelector(".oldHistory").style.opacity = "1";
-    popup.querySelector(".round").innerText = "Qc Round 2"
+    popup.querySelector(".round").innerText = "Round 2"
     popup.querySelector(".comment").innerText = el[23]
-    popup.querySelector(".QCTime").innerText = `Checked at :${el[21]}`
+    popup.querySelector(".QCTime").innerText = `QC Time : ${el[21]}`
     popup.querySelector(".oldHistory").addEventListener("click", () => showQcHistory(el))
 }

@@ -2,13 +2,12 @@ body.light-theme {
     border-radius: 10px;
     height: 100vh;
     font-family: 'nunito', sans-serif;
-    background: linear-gradient(to bottom right, #ffffff, #ffffff);
-    color: rgb(0, 0, 0);
+    background: linear-gradient(to bottom right, #e4e4e4, #e4e4e4);
+    color: #000000;
 }
 
 body.light-theme button {
-    background: rgb(59, 134, 255);
-    box-shadow: 0 4px 15px 0 rgba(252, 104, 110, 0.75);
+    background: #556ee6;
     font-weight: 600;
     color: rgb(255, 255, 255);
     cursor: pointer;
@@ -36,14 +35,14 @@ body.light-theme .header {
     color: rgb(0, 0, 0);
     border: 2px solid rgba(30, 30, 30, 0.525);
     padding: 10px 20px;
-    width: 95%;
+    width: 98%;
     margin: 0 10px;
 }
 
 body.light-theme .tile {
-    background: linear-gradient(to left, #87abff, #4ed19d);
+    background: white;
     padding: 5px 15px;
-    width: 95%;
+    width: 98%;
     height: fit-content;
     min-height: 70px;
     border-radius: 20px;
@@ -65,7 +64,7 @@ body.light-theme select {
     width: fit-content;
     font-size: 15px;
     font-family: 'nunito', sans-serif;
-    background: rgb(59, 134, 255);
+    background: #556ee6;
     color: white;
     border: white 2px solid;
     border-radius: 20px;
@@ -81,7 +80,7 @@ body.light-theme select {
 }
 
 body.light-theme .videoInputLable {
-    background: rgb(59, 134, 255);
+    background: #556ee6;
     box-shadow: 0 4px 15px 0 rgba(252, 104, 110, 0.75);
     font-weight: 600;
     color: #fff;
@@ -102,4 +101,16 @@ body.light-theme .videoInputLable {
     min-width: 250px;
     min-height: 35px;
     box-sizing: border-box;
+}
+
+body.light-theme .prop {
+    padding: 0 5px;
+    margin: 10px 0;
+}
+
+body.light-theme .propName {
+    color: rgba(0, 0, 0, 0.774);
+    border: rgba(255, 255, 255, 0.354) 2px solid;
+    border-radius: 15px;
+    padding: 0 5px;
 }

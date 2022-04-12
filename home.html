@@ -62,16 +62,16 @@
             <h2 class="title" style="color: black;">QC History</h2>
             <div class="qcPopup hidden">
                 <div class="roundSwitchContainer">
-                    <span class="newHistory curser-pointer ">←</span>
+                    <i class="oldHistory curser-pointer fa-solid fa-angles-left"></i>
                     <span class="round">Round 2</span>
-                    <span class="oldHistory curser-pointer">→</span>
+                    <i class="newHistory curser-pointer fa-solid fa-angles-right"></i>
                 </div>
                 <span class="status">Rejected</span>
                 <span class="comment">Please explain it well. Background noise at 5:44 and low light in whole
                     video.</span>
                 <!-- <span class="uploadTime">Uploaded at : Apr 6, 2022 15:00:00</span> -->
-                <span class="QCTime">Checked at : Apr 7, 2022 18:00:00</span>
-                <span class="downloadBtn">Download</span>
+                <span class="QCTime">QC Time : Apr 7, 2022 18:00:00</span>
+                <!-- <span class="downloadBtn">Download</span> -->
             </div>
             <div class="quePopup hidden">
                 <img class="waitImage" src=""></img>
@@ -109,7 +109,7 @@
                     <div class="prop"><span class="propName video-name-div">Video Selected : <span
                                 class="propValue videoSelected">None</span></span>
                     </div>
-                    <button class="previewBeforeSubmit hidden">Play ►</button>
+                    <button class="previewBeforeSubmit hidden" style="min-width: fit-content;">►</button>
                 </div>
                 <div class="tileAction">
                     <button class="viewQue view-question-btn">View Question</button>
@@ -130,6 +130,7 @@
         </div>
     </div>
 </body>
+<script src="https://kit.fontawesome.com/2e507ab521.js" crossorigin="anonymous"></script>
 <script src="util.js"></script>
 <script src="js.js"></script>
 
