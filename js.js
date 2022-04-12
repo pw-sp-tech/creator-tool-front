@@ -181,7 +181,9 @@ fetchData("/user/verify", {
         email: email,
     }),
 }).then((data) => {
-    if (data.ERROR) {} else {
+    if (data.ERROR == "USER_NOT_FOUND") {
+        loaderText.innerHTML = "USER_NOT_FOUND"
+    } else {
         loaderText.innerHTML = `Please Wait, ${String(data.name).split(" ")[0]
       }.Getting your assignment`;
 

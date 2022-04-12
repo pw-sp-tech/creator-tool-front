@@ -96,6 +96,7 @@ function login() {
     if (id === "1") {
         let email = emailDiv.querySelector('input').value;
         let pass = passDiv.querySelector('input').value;
+        loginBtn.innerHTML = `Logging In...`
         fetchData('/auth/signin', {
             method: "POST",
             headers: {
@@ -103,14 +104,14 @@ function login() {
             },
             body: JSON.stringify({
                 "email": email,
-                "password":pass,
-                
+                "password": pass,
+
             })
         }).then(data => {
-            if (data.user.token ) {
+            if (data.user.token) {
                 localStorage.setItem('accessToken', data.user.token);
-                localStorage.setItem("userName",data.user.fullName);
-                localStorage.setItem("userEmail",data.user.email)
+                localStorage.setItem("userName", data.user.fullName);
+                localStorage.setItem("userEmail", data.user.email)
                 window.location.href = "home.html";
             } else if (data.ERROR) {
                 showAlert("Invalid Email or Password")
@@ -121,11 +122,13 @@ function login() {
         let email = emailDiv.querySelector('input').value;
         let pass = passDiv.querySelector('input').value;
         let pass2 = pass2Div.querySelector('input').value;
+
         if (!email || !name || !pass || !pass2) {
             showAlert("Please fill all inputs!")
         } else if (pass !== pass2) {
             showAlert("Passwords Not Matched!")
         } else {
+            loginBtn.innerHTML = `Please Wait...`
             fetchData('/auth/signup', {
                 method: "POST",
                 headers: {
@@ -133,13 +136,17 @@ function login() {
                 },
                 body: JSON.stringify({
                     "fullName": name,
-                    "email":email,
-                    "password":pass,
-                    
+                    "email": email,
+                    "password": pass,
+
                 })
             }).then(data => {
-                if(data.msg=="Successfully Signed Up"){
-                window.location.href = 'login.html'}
+                if (data.msg == "Successfully Signed Up") {
+                    window.location.href = 'login.html'
+                } else if (data.ERROR == "USER_ALREADY_EXIST") {
+                    showAlert("USER_ALREADY_EXIST")
+                    loginBtn.innerHTML = "Register"
+                }
             })
         }
     }
