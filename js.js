@@ -183,7 +183,9 @@ fetchData("/user/verify", {
 }).then((data) => {
     if (data.ERROR == "USER_NOT_FOUND") {
         loaderText.innerHTML = "You're not authorized to use this app. If this is a mistake, Please contact to your manager."
-        document.querySelector(".loader-box").remove()
+        document.querySelectorAll(".ring").forEach(el => {
+            el.remove()
+        })
     } else {
         loaderText.innerHTML = `Please Wait, ${String(data.name).split(" ")[0]
       }.Getting your assignment`;
@@ -417,13 +419,14 @@ function createSerialNum() {
 
 function uploadvideo(e) {
     e.preventDefault();
-    var uploadLoader = this.parentElement.querySelector(".uploading-loader")
+    //var uploadLoader = this.parentElement.querySelector(".uploading-loader")
+    this.parentElement.querySelector("button[type='submit']").innerHTML = `Submitting <i class="fa-solid fa-spinner fa-spin-pulse"></i>`
     var input = this.querySelector(".videoInput");
     var videoName = this.querySelector(".videoName").value;
     var rowNum = this.querySelector(".row-num").innerText;
     var data = new FormData()
     if (input.files[0]) {
-        uploadLoader.classList.remove("hidden")
+        //uploadLoader.classList.remove("hidden")
         data.append('file', input.files[0])
         var fileSize = ((input.files[0].size) / 1024 / 1024).toFixed(2)
 
@@ -451,6 +454,8 @@ function uploadvideo(e) {
                 updateSheet(sheetId, range, value);
 
 
+            } else {
+                this.parentElement.querySelector("button[type='submit']").innerHTML = `ERROR <i class="fa-solid fa-triangle-exclamation fa-fade"></i>`
             }
         });
     } else {
