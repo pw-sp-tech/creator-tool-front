@@ -108,13 +108,14 @@ function login() {
 
             })
         }).then(data => {
-            if (data.user.token) {
+            if (data.user && data.user.token) {
                 localStorage.setItem('accessToken', data.user.token);
                 localStorage.setItem("userName", data.user.fullName);
                 localStorage.setItem("userEmail", data.user.email)
                 window.location.href = "home.html";
-            } else if (data.ERROR) {
+            } else if (data.ERROR == "USER_NOT_FOUND") {
                 showAlert("Invalid Email or Password")
+                loginBtn.innerHTML = `Login`
             }
         })
     } else {
