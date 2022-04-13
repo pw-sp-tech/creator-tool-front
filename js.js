@@ -189,6 +189,10 @@ fetchData("/user/verify", {
 }).then((data) => {
     if (data.ERROR == "USER_NOT_FOUND") {
         loaderText.innerHTML = "You're not authorized to use this app. If this is a mistake, Please contact to your manager."
+        document.querySelector(".go-to-login").classList.remove('hidden');
+        document.querySelector(".go-to-login").addEventListener('click', () => {
+            window.location.href = 'login.html'
+        })
         document.querySelectorAll(".ring").forEach(el => {
             el.remove()
         })
