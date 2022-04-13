@@ -107,8 +107,8 @@
                     <div class="prop deadline-div"><span class="propName ">Deadline : <span class="propValue demo deadline"
                                 id="demo"></span></span>
                     </div>
-                    <div class="prop"><span class="propName video-name-div">Video Selected : <span
-                                class="propValue videoSelected">None</span></span>
+                    <div class="prop"><span class="propName video-name-div">Files Selected : <span
+                                class="propValue videoSelected">None</span>, <span class="propValue pdfSelected">None</span></span>
                     </div>
                     <button class="previewBeforeSubmit hidden" style="min-width: fit-content;">►</button>
                 </div>
@@ -120,10 +120,12 @@
                     <form action="" class="videoUploadForm">
                         <input type="hidden" class="videoName" value="videoName">
                         <label class="videoInputLable"><input type="file" class="videoInput hidden" accept="video/mp4">Choose Video</label>
+                        <label class="pdfInputLable"><input type="file" class="pdfInput hidden" accept="application/pdf">Choose PDF</label>
                         <p class="row-num hidden"></p>
                         <p class="sme-round hidden"></p>
-                        <button type="submit">Submit Video</button>
+                        <button type="submit">Submit Assignment</button>
                     </form>
+
 
                     <label class="uploading-loader hidden"> Uploading <i class="fa-solid fa-spinner fa-spin-pulse"></i></label>
                 </div>

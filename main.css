@@ -143,6 +143,12 @@ button:hover {
     border-radius: 15px;
 }
 
+.pdfUploadForm {
+    padding-right: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.272);
+    border-radius: 15px;
+}
+
 .popup {
     position: fixed;
     top: 15%;
@@ -343,6 +349,38 @@ option {
 }
 
 .videoInputLable:hover {
+    background-position: 100% 0;
+    -moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+}
+
+.pdfInputLable {
+    background-image: linear-gradient(to right, #fc6076, #ff9a44, #ef9d43, #e75516);
+    box-shadow: 0 4px 15px 0 rgba(252, 104, 110, 0.75);
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+    border: none;
+    background-size: 300% 100%;
+    border-radius: 50px;
+    -moz-transition: all .4s ease-in-out;
+    -o-transition: all .4s ease-in-out;
+    -webkit-transition: all .4s ease-in-out;
+    transition: all .4s ease-in-out;
+    font-size: 15px;
+    padding: 5px 10px;
+    border: none;
+    margin-left: 15px;
+    font-family: 'Nunito', sans-serif;
+    min-width: 250px;
+    min-height: 35px;
+    box-sizing: border-box;
+}
+
+.pdfInputLable:hover {
     background-position: 100% 0;
     -moz-transition: all .4s ease-in-out;
     -o-transition: all .4s ease-in-out;

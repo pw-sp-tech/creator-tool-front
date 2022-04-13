@@ -43,12 +43,18 @@ function deadline(sheetdate) {
 }
 
 
-const fileInput = document.querySelector(".videoInput");
-const videoSelectedProp = document.querySelector(".videoSelected")
-fileInput.addEventListener('change', () => {
-        videoSelectedProp.innerHTML = fileInput.value.toString().replace("C:\\fakepath\\", "")
-    })
-    // main process==============
+// const fileInput = document.querySelector(".videoInput");
+// const fileInput2 = document.querySelector(".pdfInput");
+// const videoSelectedProp = document.querySelector(".videoSelected");
+// const pdfSelectedProp = document.querySelector(".pdfSelected");
+
+// fileInput.addEventListener('change', () => {
+//     videoSelectedProp.innerHTML = videoSelectedProp.innerText = 'None' ? `${fileInput.value.toString().replace("C:\\fakepath\\", "")}` : `${videoSelectedProp.innerHTML},${fileInput.value.toString().replace("C:\\fakepath\\", "")}`
+// })
+// fileInput2.addEventListener('change', () => {
+//         videoSelectedProp.innerHTML = videoSelectedProp.innerText = 'None' ? `${fileInput2.value.toString().replace("C:\\fakepath\\", "")}` : `${videoSelectedProp.innerHTML},${fileInput2.value.toString().replace("C:\\fakepath\\", "")}`
+//     })
+// main process==============
 const preferedMode = localStorage.getItem('mode');
 const switchModeBtn = document.querySelector(".switch-mode");
 if (!preferedMode) {
@@ -317,6 +323,7 @@ function setPendingData(pendingData) {
         newTile.querySelector(".videoName").value = el[9]
         newTile.querySelector(".feedback-btn").addEventListener("click", () => showErrorPopUp(el))
         newTile.querySelector(".videoInput").addEventListener("change", showvideoName)
+        newTile.querySelector(".pdfInput").addEventListener("change", showpdfName)
         newTile.querySelector(".videoUploadForm").addEventListener("submit", uploadvideo)
         newTile.querySelector(".view-question-btn").addEventListener("click", () => showQuestion(el))
         newTile.querySelector(".qc-history-btn").remove()
@@ -403,6 +410,11 @@ function showvideoName(e) {
     videoName.innerText = this.files[0].name
 }
 
+function showpdfName(e) {
+    var pdfName = this.parentElement.parentElement.parentElement.parentElement.querySelector(".pdfSelected")
+    pdfName.innerText = this.files[0].name
+}
+
 // upload video
 
 function createSerialNum() {
@@ -422,15 +434,17 @@ function uploadvideo(e) {
     //var uploadLoader = this.parentElement.querySelector(".uploading-loader")
     this.parentElement.querySelector("button[type='submit']").innerHTML = `Submitting <i class="fa-solid fa-spinner fa-spin-pulse"></i>`
     var input = this.querySelector(".videoInput");
+    var input2 = this.querySelector(".pdfInput");
     var videoName = this.querySelector(".videoName").value;
     var rowNum = this.querySelector(".row-num").innerText;
     var data = new FormData()
-    if (input.files[0]) {
+    if (input.files[0] && input2.files[0]) {
         //uploadLoader.classList.remove("hidden")
-        data.append('file', input.files[0])
+        data.append('files', input.files[0])
+        data.append('files', input2.files[0])
         var fileSize = ((input.files[0].size) / 1024 / 1024).toFixed(2)
 
-        fetchData(`/upload?name=${videoName}.mp4`, {
+        fetchData(`/upload?name=${videoName}`, {
             method: "POST",
             body: data,
         }).then((data) => {
@@ -463,6 +477,31 @@ function uploadvideo(e) {
     }
 }
 
+function uploadpdf() {
+    e.preventDefault();
+    //var uploadLoader = this.parentElement.querySelector(".uploading-loader")
+    this.querySelector("button[type='submit']").innerHTML = `Submitting <i class="fa-solid fa-spinner fa-spin-pulse"></i>`
+    var input = this.querySelector(".pdfInput");
+    var pdfName = this.querySelector(".pdfName").value;
+    var data = new FormData()
+    if (input.files[0]) {
+        //uploadLoader.classList.remove("hidden")
+        data.append('file', input.files[0])
+        fetchData(`/upload?name=${pdfName}.pdf`, {
+            method: "POST",
+            body: data,
+        }).then((data) => {
+            if (data.SUCCESS) {
+                this.querySelector("button[type='submit']").innerHTML = `PDF <i class="fa-solid fa-check"></i>`
+
+            } else {
+                this.parentElement.querySelector("button[type='submit']").innerHTML = `ERROR <i class="fa-solid fa-triangle-exclamation fa-fade"></i>`
+            }
+        });
+    } else {
+        alert("Please select a video")
+    }
+}
 //  fetch rejected data========
 function rejWork(bookdata) {
     fetchData("/tracker/assignments/rejected", {
@@ -508,9 +547,12 @@ function setRejectedData(arr) {
         newTile.querySelector(".chapter-name").innerText = el[5]
         newTile.querySelector(".question-type").innerText = el[7]
         newTile.querySelector(".video-name").innerText = el[9]
-        newTile.querySelector(".row-num").innerText = el[el.length - 1]
+        newTile.querySelectorAll(".row-num").forEach(em => {
+            em.innerText = el[el.length - 1]
+        })
         newTile.querySelector(".feedback-btn").remove()
         newTile.querySelector(".videoInput").addEventListener("change", showvideoName)
+        newTile.querySelector(".pdfInput").addEventListener("change", showpdfName)
         newTile.querySelector(".videoUploadForm").addEventListener("submit", uploadvideo)
         newTile.querySelector(".qc-history-btn").addEventListener("click", () => showQcHistory(el))
         newTile.querySelector(".preview-btn").addEventListener("click", () => previewVideo(el, false))
