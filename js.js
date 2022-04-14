@@ -399,8 +399,6 @@ function popupHide() {
     popup.querySelector(".vidPopup").classList.add("hidden")
     popup.querySelector(".feedbackPopup").classList.add("hidden")
     popup.querySelector(".quePopup").classList.add("hidden");
-
-
 }
 // show video name
 function showvideoName(e) {
@@ -436,14 +434,15 @@ function createSerialNum() {
 function uploadvideo(e) {
     e.preventDefault();
     //var uploadLoader = this.parentElement.querySelector(".uploading-loader")
-    this.parentElement.querySelector("button[type='submit']").innerHTML = `Submitting <i class="fa-solid fa-spinner fa-spin-pulse"></i>`
+
     var input = this.querySelector(".videoInput");
     var input2 = this.querySelector(".pdfInput");
     var videoName = this.querySelector(".videoName").value;
     var rowNum = this.querySelector(".row-num").innerText;
     var data = new FormData()
     if (input.files[0] && input2.files[0]) {
-        //uploadLoader.classList.remove("hidden")
+        this.parentElement.querySelector("button[type='submit']").innerHTML = `Submitting <i class="fa-solid fa-spinner fa-spin-pulse"></i>`
+            //uploadLoader.classList.remove("hidden")
         data.append('files', input.files[0])
         data.append('files', input2.files[0])
         var fileSize = ((input.files[0].size) / 1024 / 1024).toFixed(2)
@@ -477,7 +476,7 @@ function uploadvideo(e) {
             }
         });
     } else {
-        alert("Please select a video")
+        alert("Please select both files")
     }
 }
 
