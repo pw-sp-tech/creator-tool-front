@@ -139,6 +139,10 @@ function updateSheet(id, range, value) {
             values: value,
         }),
     }).then((data) => {
+        if (data.ERROR == "ERROR_WHILE_WRITING") {
+            alert("Error while writing in sheet..Please check permissions.")
+            return;
+        }
         getFilterBook()
 
     });
@@ -476,6 +480,10 @@ function uploadvideo(e) {
             }
         });
     } else {
+        this.parentElement.querySelector("button[type='submit']").innerHTML = `Try Again`;
+        setTimeout(() => {
+            this.parentElement.querySelector("button[type='submit']").innerHTML = `Submit Assignments`;
+        }, 3000);
         alert("Please select both files")
     }
 }
