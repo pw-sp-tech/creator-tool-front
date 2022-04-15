@@ -411,7 +411,7 @@ function showvideoName(e) {
     const $video = document.createElement("video");
     $video.src = url;
     $video.addEventListener("loadedmetadata", function() {
-        if (!file.name.toString().includes(".mp4") || parseInt(this.videoWidth) != 1080 || parseInt(this.videoHeight) != 720) {
+        if (!file.name.toString().includes(".mp4") || parseInt(this.videoWidth) != 1280 || parseInt(this.videoHeight) != 720) {
             alert("Please check the format and video resolution.");
             $video.remove()
             e.target.value = '';
