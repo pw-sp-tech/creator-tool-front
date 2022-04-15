@@ -421,8 +421,8 @@ function showvideoName(e) {
             e.target.parentElement.parentElement.parentElement.parentElement.querySelector(".previewBeforeSubmit").addEventListener('click', () => {
                 previewVideo(url, true)
             })
-            var videoName = this.parentElement.parentElement.parentElement.parentElement.querySelector(".videoSelected")
-            videoName.innerText = this.files[0].name
+            var videoName = e.target.parentElement.parentElement.parentElement.parentElement.querySelector(".videoSelected")
+            videoName.innerText = file.name
         }
     });
 
