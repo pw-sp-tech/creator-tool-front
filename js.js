@@ -406,14 +406,26 @@ function popupHide() {
 }
 // show video name
 function showvideoName(e) {
-    e.target.parentElement.parentElement.parentElement.parentElement.querySelector(".previewBeforeSubmit").classList.remove("hidden");
     let file = e.target.files[0];
     let url = URL.createObjectURL(file);
-    e.target.parentElement.parentElement.parentElement.parentElement.querySelector(".previewBeforeSubmit").addEventListener('click', () => {
-        previewVideo(url, true)
-    })
-    var videoName = this.parentElement.parentElement.parentElement.parentElement.querySelector(".videoSelected")
-    videoName.innerText = this.files[0].name
+    const $video = document.createElement("video");
+    $video.src = url;
+    $video.addEventListener("loadedmetadata", function() {
+        if (!file.name.toString().includes(".mp4") || parseInt(this.videoWidth) < 1080 || parseInt(this.videoHeight) < 720) {
+            alert("Please check the format and video resolution.");
+            $video.remove()
+            e.target.value = '';
+        } else {
+            e.target.parentElement.parentElement.parentElement.parentElement.querySelector(".previewBeforeSubmit").classList.remove("hidden");
+            $video.remove()
+            e.target.parentElement.parentElement.parentElement.parentElement.querySelector(".previewBeforeSubmit").addEventListener('click', () => {
+                previewVideo(url, true)
+            })
+            var videoName = this.parentElement.parentElement.parentElement.parentElement.querySelector(".videoSelected")
+            videoName.innerText = this.files[0].name
+        }
+    });
+
 }
 
 function showpdfName(e) {
