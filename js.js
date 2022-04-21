@@ -202,7 +202,7 @@ fetchData("/user/verify", {
         })
     } else {
         loaderText.innerHTML = `Please Wait, ${String(data.name).split(" ")[0]
-      }.Getting your assignment`;
+            }.Getting your assignment`;
 
         getAssignment(data);
     }
@@ -239,7 +239,7 @@ function getAssignment(data) {
 function totalBooks() {
     var books = [];
     assignments.forEach((el) => {
-        books.push(el[2]);
+        books.push(`${el[2]}-${el[1]}`);
     });
     var uniqueBook = Array.from(new Set(books));
     addFilter(uniqueBook);
@@ -260,10 +260,12 @@ function addFilter(arr) {
 // filter update
 
 function getFilterBook() {
-    var bookName = bookfilter.value;
+    var fiterValue = bookfilter.value;
+    var bookName=fiterValue.split("-")[0]
+    var filterClass=fiterValue.split("-")[1]
     var bookdata = {};
     assignments.forEach((el) => {
-        if (el[2] == bookName) {
+        if (el[2] == bookName && el[1]==filterClass) {
             bookdata.link = getId(el[6]);
             currentSheetLink = el[6];
             bookdata.uniqueId = el[9];
@@ -308,6 +310,7 @@ function pendingWork(bookdata) {
         } else {
             showCountDiv.querySelector(".show-count-divh2").innerText = "You do not have any task assigned yet. Try switching book."
             setPendingData(data);
+
         }
 
     });
@@ -322,6 +325,7 @@ function setPendingData(pendingData) {
         document.querySelectorAll(".new-tile").forEach((el) => el.remove())
 
     }
+
     pendingData.forEach((el) => {
         var newTile = tile.cloneNode(true)
         newTile.querySelector(".chapter-name").innerText = el[5]
@@ -406,26 +410,19 @@ function popupHide() {
 }
 // show video name
 function showvideoName(e) {
+    e.target.parentElement.parentElement.parentElement.parentElement.querySelector(".previewBeforeSubmit").classList.remove("hidden");
     let file = e.target.files[0];
     let url = URL.createObjectURL(file);
-    const $video = document.createElement("video");
-    $video.src = url;
-    $video.addEventListener("loadedmetadata", function() {
-        if (!file.name.toString().includes(".mp4") || parseInt(this.videoWidth) != 1280 || parseInt(this.videoHeight) != 720) {
-            alert("Please check the format and video resolution.");
-            $video.remove()
-            e.target.value = '';
-        } else {
-            e.target.parentElement.parentElement.parentElement.parentElement.querySelector(".previewBeforeSubmit").classList.remove("hidden");
-            $video.remove()
-            e.target.parentElement.parentElement.parentElement.parentElement.querySelector(".previewBeforeSubmit").addEventListener('click', () => {
-                previewVideo(url, true)
-            })
-            var videoName = e.target.parentElement.parentElement.parentElement.parentElement.querySelector(".videoSelected")
-            videoName.innerText = file.name
-        }
-    });
-
+    e.target.parentElement.parentElement.parentElement.parentElement.querySelector(".previewBeforeSubmit").addEventListener('click', () => {
+        previewVideo(url, true)
+    })
+    var videoName = this.parentElement.parentElement.parentElement.parentElement.querySelector(".videoSelected")
+    videoName.innerText = this.files[0].name
+    // document.querySelectorAll(".videoInput").forEach(el => {
+    //     el.disabled = true
+    //     el.parentElement.style.backgroundImage='none'
+    //     el.parentElement.style.backgroundImage=`linear-gradient(to right, #968d8f, #989490, #a8a29b, #bba79f)`
+    // })
 }
 
 function showpdfName(e) {
@@ -446,7 +443,6 @@ function createSerialNum() {
     var result = left + right;
     return result;
 }
-
 function uploadvideo(e) {
     e.preventDefault();
     //var uploadLoader = this.parentElement.querySelector(".uploading-loader")
@@ -458,7 +454,7 @@ function uploadvideo(e) {
     var data = new FormData()
     if (input.files[0] && input2.files[0]) {
         this.parentElement.querySelector("button[type='submit']").innerHTML = `Submitting <i class="fa-solid fa-spinner fa-spin-pulse"></i>`
-            //uploadLoader.classList.remove("hidden")
+        //uploadLoader.classList.remove("hidden")
         data.append('files', input.files[0])
         data.append('files', input2.files[0])
         var fileSize = ((input.files[0].size) / 1024 / 1024).toFixed(2)
@@ -540,16 +536,17 @@ function rejWork(bookdata) {
     }).then((data) => {
         loadingWindow.classList.add("hidden");
         const finalData = []
-        data.forEach(el => {
-            let book = el[2];
-            NomenclatureData.forEach(el2 => {
-                if (el2[0] == 'Book Code' && el2[1] == book) {
-                    el[2] = el2[2]
-                }
-            });
-            finalData.push(el)
-        })
+
         if (data.length > 0) {
+            data.forEach(el => {
+                let book = el[2];
+                NomenclatureData.forEach(el2 => {
+                    if (el2[0] == 'Book Code' && el2[1] == book) {
+                        el[2] = el2[2]
+                    }
+                });
+                finalData.push(el)
+            })
             showCountDiv.querySelector(".show-count-divh2").innerText = `You have ${data.length} rejected  tasks.`
             setRejectedData(finalData);
         } else {
@@ -565,38 +562,40 @@ function setRejectedData(arr) {
     if (document.querySelector(".new-tile")) {
         document.querySelectorAll(".new-tile").forEach((el) => el.remove())
     }
-    arr.forEach((el) => {
-        var newTile = tile.cloneNode(true)
-        newTile.querySelector(".chapter-name").innerText = el[5]
-        newTile.querySelector(".question-type").innerText = el[7]
-        newTile.querySelector(".video-name").innerText = el[9]
-        newTile.querySelectorAll(".row-num").forEach(em => {
-            em.innerText = el[el.length - 1]
-        })
-        newTile.querySelector(".feedback-btn").remove()
-        newTile.querySelector(".videoInput").addEventListener("change", showvideoName)
-        newTile.querySelector(".pdfInput").addEventListener("change", showpdfName)
-        newTile.querySelector(".videoUploadForm").addEventListener("submit", uploadvideo)
-        newTile.querySelector(".qc-history-btn").addEventListener("click", () => showQcHistory(el))
-        newTile.querySelector(".preview-btn").addEventListener("click", () => previewVideo(el, false))
-        newTile.querySelector(".view-question-btn").addEventListener("click", () => showQuestion(el))
-        if (el[15] == "[SME]Round3") {
-            newTile.querySelector(".sme-round").innerText = 3
-        }
-        if (el[15] == "[SME]Round2") {
-            newTile.querySelector(".sme-round").innerText = 2
-        }
-        setInterval(() => {
-            var setTime = deadline(el[28])
-            if (setTime == "EXPIRED") {
-                newTile.classList.add("border-red")
+    if (arr.length > 0) {
+        arr.forEach((el) => {
+            var newTile = tile.cloneNode(true)
+            newTile.querySelector(".chapter-name").innerText = el[5]
+            newTile.querySelector(".question-type").innerText = el[7]
+            newTile.querySelector(".video-name").innerText = el[9]
+            newTile.querySelectorAll(".row-num").forEach(em => {
+                em.innerText = el[el.length - 1]
+            })
+            newTile.querySelector(".feedback-btn").remove()
+            newTile.querySelector(".videoInput").addEventListener("change", showvideoName)
+            newTile.querySelector(".pdfInput").addEventListener("change", showpdfName)
+            newTile.querySelector(".videoUploadForm").addEventListener("submit", uploadvideo)
+            newTile.querySelector(".qc-history-btn").addEventListener("click", () => showQcHistory(el))
+            newTile.querySelector(".preview-btn").addEventListener("click", () => previewVideo(el, false))
+            newTile.querySelector(".view-question-btn").addEventListener("click", () => showQuestion(el))
+            if (el[15] == "[SME]Round3") {
+                newTile.querySelector(".sme-round").innerText = 3
             }
-            newTile.querySelector(".demo").innerText = setTime
-        }, 1000);
-        newTile.classList.remove("hidden")
-        newTile.classList.add("new-tile")
-        tileContainer.append(newTile)
-    })
+            if (el[15] == "[SME]Round2") {
+                newTile.querySelector(".sme-round").innerText = 2
+            }
+            setInterval(() => {
+                var setTime = deadline(el[28])
+                if (setTime == "EXPIRED") {
+                    newTile.classList.add("border-red")
+                }
+                newTile.querySelector(".demo").innerText = setTime
+            }, 1000);
+            newTile.classList.remove("hidden")
+            newTile.classList.add("new-tile")
+            tileContainer.append(newTile)
+        })
+    }
 
 }
 
@@ -687,6 +686,7 @@ function setInQcData(arr) {
     if (document.querySelector(".new-tile")) {
         document.querySelectorAll(".new-tile").forEach((el) => el.remove())
     }
+    if(arr.length>0){
     arr.forEach((el) => {
         var newTile = tile.cloneNode(true)
         newTile.querySelector(".chapter-name").innerText = el[5]
@@ -711,11 +711,11 @@ function setInQcData(arr) {
         newTile.classList.add("new-tile")
         tileContainer.append(newTile)
     })
+}
 
 }
 
 function showQcHistory2(el) {
-    console.log(el)
     popupHide()
     popup.querySelector(".newHistory").style.opacity = "0"
     popup.querySelector(".oldHistory").style.opacity = "0";
@@ -739,7 +739,6 @@ function showQcHistory2(el) {
 }
 
 function showNewHistory2(el) {
-    console.log(el)
     popup.querySelector(".newHistory").style.opacity = "0";
     popup.querySelector(".oldHistory").style.opacity = "1";
     popup.querySelector(".round").innerText = "Round 2"

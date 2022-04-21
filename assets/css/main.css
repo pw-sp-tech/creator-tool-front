@@ -40,7 +40,7 @@ body {
     }
 }
 
-.loader-box .ring::before {
+.loader-box  .ring::before {
     content: '';
     position: absolute;
     top: 12px;
@@ -676,4 +676,8 @@ p {
 .show-count-div{
     padding: 20px;
     color: red;
+}
+.btn-disabled{
+    background-image: linear-gradient(to right, #968d8f, #989490, #a8a29b, #bba79f) !important;
+    box-shadow: 0 4px 15px 0 rgb(158 143 144 / 75%) !important;
 }
