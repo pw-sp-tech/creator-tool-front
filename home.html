@@ -9,13 +9,17 @@
     <script src="https://kit.fontawesome.com/2e507ab521.js" crossorigin="anonymous"></script>
     <!-- Google fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <link rel="stylesheet" href="light.css">
     <link rel="stylesheet" href="main.css">
+    <!-- Filepond stylesheet -->
+    <link href="filepond.css" rel="stylesheet">
+    <!-- <link href="style.css" rel="stylesheet"> -->
     <title>PW Creators' Tool</title>
 </head>
 
 <body>
+
     <div class="loader-box verifyWindow">
         <div class="ring"></div>
         <div class="ring"></div>
@@ -47,6 +51,7 @@
                 <span class="filter curser-pointer navbar__list pending active">Pending</span>
                 <span class="filter curser-pointer navbar__list rejected">Rejected</span>
                 <span class="filter curser-pointer navbar__list qc-progress">QC In Progress</span>
+                <span class="filter curser-pointer navbar__list bulk-upload" style="color: aqua;">Bulk Uploading</span>
             </div>
             <div>
                 <span>Switch Book ►</span>
@@ -54,7 +59,8 @@
                 </select>
             </div>
         </div>
-
+        <input type="file" multiple class="filepond hidden">
+        <button class="bulkFileUploadBtn hidden" style="margin-left: 3em;">UPLOAD</button>
         <div class="show-count-div ">
             <h2 class="show-count-divh2"></h2>
         </div>
@@ -92,6 +98,8 @@
             </div>
         </div>
         <div class="overlay hidden"></div>
+
+
         <div class="tileContainer">
             <div class="tile hidden">
                 <div class="propContainer ">
@@ -133,8 +141,14 @@
         </div>
     </div>
 </body>
-
 <script src="util.js"></script>
 <script src="js.js"></script>
+<!-- Load FilePond library -->
+<script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+
+<!-- Turn all file input elements into ponds -->
+<script>
+    FilePond.parse(document.body);
+</script>
 
 </html>
