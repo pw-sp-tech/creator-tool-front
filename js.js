@@ -159,6 +159,7 @@ navLink.forEach((link) => {
         loadingWindow.classList.remove("hidden");
         loaderText.innerHTML = ''
         if (link.innerText === "Pending") {
+            document.querySelector(".filepond").classList.add('hidden')
             document.querySelector('.bulkFileUploadBtn').classList.add('hidden')
             qcProgress.classList.remove("active");
             rejected.classList.remove("active");
@@ -167,6 +168,7 @@ navLink.forEach((link) => {
             onPage = 1
             getFilterBook()
         } else if (link.innerText === "Rejected") {
+            document.querySelector(".filepond").classList.add('hidden')
             document.querySelector('.bulkFileUploadBtn').classList.add('hidden')
             qcProgress.classList.remove("active");
             rejected.classList.add("active");
@@ -175,6 +177,7 @@ navLink.forEach((link) => {
             onPage = 2
             getFilterBook()
         } else if (link.innerText === "QC In Progress") {
+            document.querySelector(".filepond").classList.add('hidden')
             document.querySelector('.bulkFileUploadBtn').classList.add('hidden')
             rejected.classList.remove("active");
             qcProgress.classList.add("active");
