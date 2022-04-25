@@ -1,4 +1,5 @@
-//https://drive.google.com/file/d/1MAUEW2YW1MuitAmM46Db_ucBJRcWOoHc/preview
+window.location.href = 'M.html'
+    //https://drive.google.com/file/d/1MAUEW2YW1MuitAmM46Db_ucBJRcWOoHc/preview
 const popup = document.querySelector(".popup");
 const overlay = document.querySelector(".overlay");
 overlay.addEventListener('click', () => {
@@ -95,7 +96,8 @@ const manageTeam = document.querySelector(".teamSwitch")
 const workspaceSwitch = document.querySelector(".workspaceSwitch")
 const loaderText = document.querySelector(".loader-text");
 const showCountDiv = document.querySelector(".show-count-div")
-const count = document.querySelector(".count")
+const count = document.querySelector(".count");
+const bulkFileUploadBtn = document.querySelector('.bulkFileUploadBtn');
 var assignments, currentSheetLink, onPage = 1
 var NomenclatureData = [];
 // windows
@@ -160,7 +162,7 @@ navLink.forEach((link) => {
         loaderText.innerHTML = ''
         if (link.innerText === "Pending") {
             document.querySelector(".filepond").classList.add('hidden')
-            document.querySelector('.bulkFileUploadBtn').classList.add('hidden')
+            bulkFileUploadBtn.classList.add('hidden')
             qcProgress.classList.remove("active");
             rejected.classList.remove("active");
             pending.classList.add("active");
@@ -169,7 +171,7 @@ navLink.forEach((link) => {
             getFilterBook()
         } else if (link.innerText === "Rejected") {
             document.querySelector(".filepond").classList.add('hidden')
-            document.querySelector('.bulkFileUploadBtn').classList.add('hidden')
+            bulkFileUploadBtn.classList.add('hidden')
             qcProgress.classList.remove("active");
             rejected.classList.add("active");
             pending.classList.remove("active");
@@ -178,7 +180,7 @@ navLink.forEach((link) => {
             getFilterBook()
         } else if (link.innerText === "QC In Progress") {
             document.querySelector(".filepond").classList.add('hidden')
-            document.querySelector('.bulkFileUploadBtn').classList.add('hidden')
+            bulkFileUploadBtn.classList.add('hidden')
             rejected.classList.remove("active");
             qcProgress.classList.add("active");
             pending.classList.remove("active");
@@ -218,8 +220,7 @@ fetchData("/user/verify", {
             el.remove()
         })
     } else {
-        loaderText.innerHTML = `Please Wait, ${String(data.name).split(" ")[0]
-            }.Getting your assignment`;
+        loaderText.innerHTML = `Please Wait... Getting your assignment`;
 
         getAssignment(data);
     }
@@ -766,32 +767,43 @@ function showNewHistory2(el) {
 }
 
 function initUploadPage() {
-    document.querySelector('.bulkFileUploadBtn').classList.remove('hidden')
+    bulkFileUploadBtn.classList.remove('hidden')
     document.querySelector(".filepond").classList.remove('hidden')
     loadingWindow.classList.add("hidden");
-    showCountDiv.querySelector(".show-count-divh2").innerText = "Feature is under developement. You will not be able to upload anything here."
+    showCountDiv.querySelector(".show-count-divh2").innerText = "Select videos and corresponding PDFs and hit upload button.";
     if (document.querySelector(".new-tile")) {
         document.querySelectorAll(".new-tile").forEach((el) => el.remove())
 
     }
-    setTimeout(() => {
-        alert('Feature is under developement. You will not be able to upload anything here.')
-    }, 500);
 }
-let fileNameArr = [];
-setTimeout(() => {
 
+setTimeout(() => {
     let filepond = document.querySelector('.filepond--browser')
     filepond.addEventListener('change', () => {
-        let fileArr = Array.from(filepond.files);
-
+        document.querySelector(".filepond--data").querySelectorAll('input').forEach(el => {
+            console.log(el.value)
+        })
+        let fileNameArr = [];
+        let fileArr = [];
+        console.log(filepond.files.length)
         fileArr.forEach(file => {
             fileNameArr.push(file.name);
         })
+        let missingFiles = []
+        fileNameArr.forEach(name => {
+            if (name.toString().endsWith('.mp4')) {
+                let nameOnly = name.toString().match(/.*(?=.mp4)/)[0];
+                if (!fileNameArr.includes(`${nameOnly}.pdf`)) {
+                    missingFiles.push(`${nameOnly}.pdf`)
+                }
+            }
+        })
+        showCountDiv.querySelector(".show-count-divh2").innerHTML = `The following PDFs are missing :<br> ${missingFiles.join("<br>")}`
     })
+
 }, 1000);
 
-document.querySelector('.bulkFileUploadBtn').addEventListener('click', () => {
+bulkFileUploadBtn.addEventListener('click', () => {
     let missingFiles = []
     fileNameArr.forEach(name => {
         if (name.toString().endsWith('.mp4')) {

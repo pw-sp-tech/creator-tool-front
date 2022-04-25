@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="assets/img/fevicon.png" type="image/png">
+    <script src="https://kit.fontawesome.com/2e507ab521.js" crossorigin="anonymous"></script>
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="light.css">
+    <link rel="stylesheet" href="main.css">
+    <!-- Filepond stylesheet -->
+    <link href="filepond.css" rel="stylesheet">
+    <!-- <link href="style.css" rel="stylesheet"> -->
+    <title>PW Creators' Tool</title>
+</head>
+
+<body>
+    <div class="home-window">
+        <nav class="navbar">
+            <h1 class="welcomeText">Welcome, <span class="welcomeName"></span></h1>
+            <div class="pageSwitchContainer">
+                <span class="workspaceSwitch pageSwitch active curser-pointer">Workspace</span>
+                <span class="teamSwitch pageSwitch curser-pointer">Manage Team</span>
+            </div>
+            <div class="actionBtns">
+                <button class="switch-mode">Light Mode ☀</button>
+                <button class="actionBtn btnLogout">Logout</button>
+            </div>
+        </nav>
+        <div class="header">
+            <div class="filterContainer">
+                <span class="filter curser-pointer navbar__list pending active">Pending</span>
+                <span class="filter curser-pointer navbar__list rejected">Rejected</span>
+                <span class="filter curser-pointer navbar__list qc-progress">QC In Progress</span>
+                <span class="filter curser-pointer navbar__list bulk-upload" style="color: aqua;">Bulk Uploading</span>
+            </div>
+            <div>
+                <span>Switch Book ►</span>
+                <select class="books">
+                </select>
+            </div>
+        </div>
+        <input type="file" multiple class="filepond hidden">
+        <button class="bulkFileUploadBtn hidden" style="margin-left: 3em;">UPLOAD</button>
+
+
+
+
+
+
+        <div class="tileContainer">
+            <div style="width: 100%;display: flex;justify-content: center;background-color: black;"><img src="./assets/img/chillax.jpg" alt=""></div>
+        </div>
+    </div>
+</body>
+<script>
+    document.querySelector(".btnLogout").addEventListener('click', () => {
+        window.location.href = 'login.html'
+    })
+</script>
+
+
+</html>
