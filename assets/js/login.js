@@ -1,4 +1,4 @@
-window.location.href = 'M.html'
+// window.location.href = 'M.html'
 $(function() {
     'use strict';
 

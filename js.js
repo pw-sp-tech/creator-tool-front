@@ -1,4 +1,33 @@
-window.location.href = 'M.html'
+let bulkFiles = []
+const bulkFileUploadBtn = document.querySelector('.bulkFileUploadBtn');
+const filePondInput = document.querySelector(".filepond");
+var pond = FilePond.create(filePondInput, {
+        onupdatefiles: (files) => {
+            bulkFiles = files
+            let missingFiles = []
+            let fileNameArr = []
+            bulkFiles.forEach(file => {
+                fileNameArr.push(file.filename)
+            })
+            fileNameArr.forEach(name => {
+                if (name.toString().endsWith('.mp4')) {
+                    let nameOnly = name.toString().match(/.*(?=.mp4)/)[0];
+                    if (!fileNameArr.includes(`${nameOnly}.pdf`)) {
+                        missingFiles.push(`${nameOnly}.pdf`)
+                    }
+                }
+            })
+
+            if (missingFiles.length > 0) {
+                document.querySelector(".show-count-div").querySelector(".show-count-divh2").innerHTML = `The following PDFs are missing :<br> ${missingFiles.join("<br>")}`
+                bulkFileUploadBtn.classList.add('hidden')
+            } else if (bulkFiles.length > 0) {
+                document.querySelector(".show-count-div").querySelector(".show-count-divh2").innerHTML = `Ready To Upload`
+                bulkFileUploadBtn.classList.remove('hidden')
+            }
+        }
+    })
+    // window.location.href = 'M.html'
     //https://drive.google.com/file/d/1MAUEW2YW1MuitAmM46Db_ucBJRcWOoHc/preview
 const popup = document.querySelector(".popup");
 const overlay = document.querySelector(".overlay");
@@ -97,10 +126,15 @@ const workspaceSwitch = document.querySelector(".workspaceSwitch")
 const loaderText = document.querySelector(".loader-text");
 const showCountDiv = document.querySelector(".show-count-div")
 const count = document.querySelector(".count");
-const bulkFileUploadBtn = document.querySelector('.bulkFileUploadBtn');
+
 var assignments, currentSheetLink, onPage = 1
 var NomenclatureData = [];
-// windows
+var eltObj = {
+        "Foundation": "1UnUcc4BCQ4AZXvY--WKdaS9GoyAou1gi6dFuZqMWEqo",
+        "IBU": "1reYKLTsqGjm_ZsD0AcokhY6Iypbweu6kHDh4hUtUkOU",
+        "Infinite Practice": "1reYKLTsqGjm_ZsD0AcokhY6Iypbweu6kHDh4hUtUkOU"
+    }
+    // windows
 const verifyWindow = document.querySelector(".verifyWindow");
 const loadingWindow = document.querySelector(".loadingWindow");
 const homeWindow = document.querySelector(".home-window");
@@ -112,7 +146,13 @@ if (userName) {
 }
 
 async function fetchData(url, params) {
-    let res = await fetch(`${urlPrefix}${url}`, params);
+    let res
+    if (url.toString().includes('localhost')) {
+        res = await fetch(url, params);
+    } else {
+        res = await fetch(`${urlPrefix}${url}`, params);
+    }
+
     return await res.json();
 }
 document.querySelector(".btnLogout").addEventListener('click', () => {
@@ -199,7 +239,7 @@ navLink.forEach((link) => {
 });
 
 // get assignment
-
+let verifyData;
 fetchData("/user/verify", {
     method: "POST",
     headers: {
@@ -220,6 +260,8 @@ fetchData("/user/verify", {
             el.remove()
         })
     } else {
+        verifyData = data;
+
         loaderText.innerHTML = `Please Wait... Getting your assignment`;
 
         getAssignment(data);
@@ -227,6 +269,7 @@ fetchData("/user/verify", {
 });
 
 function getAssignment(data) {
+
     fetchData("/user/assignments", {
         method: "POST",
         headers: {
@@ -242,6 +285,7 @@ function getAssignment(data) {
             status: data.status,
             subject: data.subject,
             uniqueId: data.name,
+            elt: eltObj[data.project]
         }),
     }).then((data) => {
         assignments = data.assignmentsArr;
@@ -284,9 +328,9 @@ function getFilterBook() {
     var bookdata = {};
     assignments.forEach((el) => {
         if (el[2] == bookName && el[1] == filterClass) {
-            bookdata.link = getId(el[6]);
-            currentSheetLink = el[6];
-            bookdata.uniqueId = el[9];
+            bookdata.link = getId(el[7]);
+            currentSheetLink = el[7];
+            bookdata.uniqueId = el[10];
         }
     });
     if (onPage == 1) {
@@ -359,7 +403,7 @@ function setPendingData(pendingData) {
         newTile.querySelector(".qc-history-btn").remove()
         newTile.querySelector(".preview-btn").remove()
         setInterval(() => {
-            var setTime = deadline(el[24])
+            var setTime = deadline(el[36])
             if (setTime == "EXPIRED") {
                 newTile.classList.add("border-red")
             }
@@ -449,6 +493,16 @@ function showpdfName(e) {
 }
 
 // upload video
+const getVideoDuration = async(file) =>
+    new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = async() => {
+            const media = new Audio(reader.result);
+            media.onloadedmetadata = () => resolve(media.duration);
+        };
+        reader.readAsDataURL(file);
+        reader.onerror = error => reject(error);
+    });
 
 function createSerialNum() {
     var oneDay = 24 * 60 * 60 * 1000;
@@ -456,13 +510,13 @@ function createSerialNum() {
     var secondDate = new Date();
     var secondDateMidnight = new Date(secondDate.getFullYear(), secondDate.getMonth(), secondDate.getDate());
     var diff = secondDate.getTime() - secondDateMidnight.getTime();
-    var left = Math.round(Math.abs((firstDate.getTime() - secondDate.getTime()) / (oneDay))) - 1;
-    var right = diff / oneDay;
+    var left = Math.floor(Math.abs((firstDate.getTime() - secondDate.getTime()) / (oneDay)));
+    var right = (diff / oneDay);
     var result = left + right;
     return result;
 }
 
-function uploadvideo(e) {
+async function uploadvideo(e) {
     e.preventDefault();
     //var uploadLoader = this.parentElement.querySelector(".uploading-loader")
 
@@ -477,6 +531,8 @@ function uploadvideo(e) {
         data.append('files', input.files[0])
         data.append('files', input2.files[0])
         var fileSize = ((input.files[0].size) / 1024 / 1024).toFixed(2)
+        var durationVid
+        durationVid = await getVideoDuration(input.files[0]);
 
         fetchData(`/upload?name=${videoName}`, {
             method: "POST",
@@ -487,16 +543,16 @@ function uploadvideo(e) {
                 // this.removeEventListener("submit", uploadvideo);
                 var link = `https://drive.google.com/file/d/${data.id}/view?usp=sharing`
                 var date = createSerialNum()
-                var range = [`Supply!M${rowNum}`, `Supply!N${rowNum}`, `Supply!O${rowNum}`, `Supply!R${rowNum}`, `Supply!S${rowNum}`, `Supply!V${rowNum}`, `Supply!X${rowNum}`];
-                var value = [link, "Answered", true, date, "[QC]Round1", `${fileSize} MB`, date];
+                var range = [`Supply!M${rowNum}`, `Supply!N${rowNum}`, `Supply!O${rowNum}`, `Supply!R${rowNum}`, `Supply!S${rowNum}`, `Supply!AI${rowNum}`, `Supply!AJ${rowNum}`];
+                var value = [link, "Answered", true, date, "[QC]Round1", `${fileSize} MB`, `${durationVid}Sec.`];
                 if (this.querySelector(".sme-round").innerText == 2) {
-                    range = [`Supply!M${rowNum}`, `Supply!P${rowNum}`, `Supply!R${rowNum}`, `Supply!S${rowNum}`, `Supply!V${rowNum}`];
-                    value = [link, true, date, "[QC]Round2", `${fileSize} MB`];
+                    range = [`Supply!M${rowNum}`, `Supply!P${rowNum}`, `Supply!R${rowNum}`, `Supply!S${rowNum}`, `Supply!AI${rowNum}`, `Supply!AJ${rowNum}`];
+                    value = [link, true, date, "[QC]Round2", `${fileSize} MB`, `${durationVid}Sec.`];
 
                 }
                 if (this.querySelector(".sme-round").innerText == 3) {
-                    range = [`Supply!M${rowNum}`, `Supply!q${rowNum}`, `Supply!R${rowNum}`, `Supply!S${rowNum}`, `Supply!V${rowNum}`];
-                    value = [link, true, date, "[QC]Round3", `${fileSize} MB`];
+                    range = [`Supply!M${rowNum}`, `Supply!q${rowNum}`, `Supply!R${rowNum}`, `Supply!S${rowNum}`, `Supply!AI${rowNum}`, `Supply!AJ${rowNum}`];
+                    value = [link, true, date, "[QC]Round3", `${fileSize} MB`, `${durationVid}Sec.`];
 
                 }
                 updateSheet(sheetId, range, value);
@@ -594,13 +650,14 @@ function setRejectedData(arr) {
             newTile.querySelector(".videoInput").addEventListener("change", showvideoName)
             newTile.querySelector(".pdfInput").addEventListener("change", showpdfName)
             newTile.querySelector(".videoUploadForm").addEventListener("submit", uploadvideo)
+            newTile.querySelector(".videoName").value = el[9]
             newTile.querySelector(".qc-history-btn").addEventListener("click", () => showQcHistory(el))
             newTile.querySelector(".preview-btn").addEventListener("click", () => previewVideo(el, false))
             newTile.querySelector(".view-question-btn").addEventListener("click", () => showQuestion(el))
-            if (el[15] == "[SME]Round3") {
+            if (el[18] == "[SME]Round3") {
                 newTile.querySelector(".sme-round").innerText = 3
             }
-            if (el[15] == "[SME]Round2") {
+            if (el[18] == "[SME]Round2") {
                 newTile.querySelector(".sme-round").innerText = 2
             }
             setInterval(() => {
@@ -627,8 +684,8 @@ function showQcHistory(el) {
     popup.querySelector(".title").innerText = "QC History"
     popup.querySelector(".qcPopup").classList.remove("hidden")
     popup.querySelector(".round").innerText = "Round 1"
-    popup.querySelector(".comment").innerText = el[19]
-    popup.querySelector(".QCTime").innerText = `QC Time : ${el[17]}`
+    popup.querySelector(".comment").innerText = el[22]
+    popup.querySelector(".QCTime").innerText = `QC Time : ${el[20]}`
     if (el[15] == "[SME]Round3") {
         popup.querySelector(".newHistory").style.opacity = "1";
         popup.querySelector(".newHistory").addEventListener("click", () => showNewHistory(el))
@@ -641,8 +698,8 @@ function showNewHistory(el) {
     popup.querySelector(".newHistory").style.opacity = "0";
     popup.querySelector(".oldHistory").style.opacity = "1";
     popup.querySelector(".round").innerText = "Round 2"
-    popup.querySelector(".comment").innerText = el[23]
-    popup.querySelector(".QCTime").innerText = `QC Time : ${el[21]}`
+    popup.querySelector(".comment").innerText = el[27]
+    popup.querySelector(".QCTime").innerText = `QC Time : ${el[25]}`
     popup.querySelector(".oldHistory").addEventListener("click", () => showQcHistory(el))
 }
 
@@ -712,6 +769,7 @@ function setInQcData(arr) {
             newTile.querySelector(".question-type").innerText = el[7]
             newTile.querySelector(".video-name").innerText = el[9]
             newTile.querySelector(".row-num").innerText = el[el.length - 1]
+            newTile.querySelector(".videoName").value = el[9]
             newTile.querySelector(".feedback-btn").remove()
             newTile.querySelector(".videoUploadForm").remove()
             newTile.querySelector(".video-name-div").remove()
@@ -746,8 +804,8 @@ function showQcHistory2(el) {
         popup.querySelector(".title").innerText = "QC History"
         popup.querySelector(".qcPopup").classList.remove("hidden")
         popup.querySelector(".round").innerText = "Round 1"
-        popup.querySelector(".comment").innerText = el[19]
-        popup.querySelector(".QCTime").innerText = `QC Time : ${el[17]}`
+        popup.querySelector(".comment").innerText = el[22]
+        popup.querySelector(".QCTime").innerText = `QC Time : ${el[20]}`
         if (el[15] == "[QC]Round3") {
             popup.querySelector(".newHistory").style.opacity = "1";
             popup.querySelector(".newHistory").addEventListener("click", () => showNewHistory2(el))
@@ -761,13 +819,13 @@ function showNewHistory2(el) {
     popup.querySelector(".newHistory").style.opacity = "0";
     popup.querySelector(".oldHistory").style.opacity = "1";
     popup.querySelector(".round").innerText = "Round 2"
-    popup.querySelector(".comment").innerText = el[23]
-    popup.querySelector(".QCTime").innerText = `QC Time : ${el[21]}`
+    popup.querySelector(".comment").innerText = el[27]
+    popup.querySelector(".QCTime").innerText = `QC Time : ${el[25]}`
     popup.querySelector(".oldHistory").addEventListener("click", () => showQcHistory(el))
 }
 
 function initUploadPage() {
-    bulkFileUploadBtn.classList.remove('hidden')
+
     document.querySelector(".filepond").classList.remove('hidden')
     loadingWindow.classList.add("hidden");
     showCountDiv.querySelector(".show-count-divh2").innerText = "Select videos and corresponding PDFs and hit upload button.";
@@ -802,16 +860,48 @@ setTimeout(() => {
     })
 
 }, 1000);
-
-bulkFileUploadBtn.addEventListener('click', () => {
-    let missingFiles = []
-    fileNameArr.forEach(name => {
-        if (name.toString().endsWith('.mp4')) {
-            let nameOnly = name.toString().match(/.*(?=.mp4)/)[0];
-            if (!fileNameArr.includes(`${nameOnly}.pdf`)) {
-                missingFiles.push(`${nameOnly}.pdf`)
-            }
+let bulkToken
+getProgress = () => {
+    fetchData(`http://localhost:3000/bulkupload?token=${bulkToken}`).then(data => {
+        let files = data.data.filecount;
+        let uploaded = data.data.uploaded;
+        let per = Math.floor((uploaded / files) * 100);
+        showCountDiv.innerHTML = `Uploaded ${uploaded} files out of ${files} (${per}%) PLEASE DO NOT REFRESH OR CLOSE THE PAGE`;
+        if (per < 100) {
+            setTimeout(() => {
+                getProgress()
+            }, 2000);
+        } else {
+            showCountDiv.innerHTML = `Uploaded successfully`
         }
     })
-    showCountDiv.querySelector(".show-count-divh2").innerHTML = `The following PDFs are missing :<br> ${missingFiles.join("<br>")}`
+
+}
+bulkFileUploadBtn.addEventListener('click', () => {
+    // let missingFiles = []
+    // let fileNameArr = []
+    // bulkFiles.forEach(file => {
+    //     fileNameArr.push(file.filename)
+    // })
+    // fileNameArr.forEach(name => {
+    //     if (name.toString().endsWith('.mp4')) {
+    //         let nameOnly = name.toString().match(/.*(?=.mp4)/)[0];
+    //         if (!fileNameArr.includes(`${nameOnly}.pdf`)) {
+    //             missingFiles.push(`${nameOnly}.pdf`)
+    //         }
+    //     }
+    // })
+    // showCountDiv.querySelector(".show-count-divh2").innerHTML = `The following PDFs are missing :<br> ${missingFiles.join("<br>")}`
+    let data = new FormData()
+    pond.getFiles().forEach(file => {
+        data.append('files', file.file)
+    })
+    fetchData(`http://localhost:3000/bulkupload?id=${getId(currentSheetLink)}`, {
+        method: "POST",
+        body: data,
+    }).then(res => {
+        bulkToken = res.token
+        showCountDiv.innerHTML = `Uploading...`
+        setTimeout(getProgress, 2000);
+    })
 })
