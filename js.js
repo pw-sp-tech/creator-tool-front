@@ -862,7 +862,7 @@ setTimeout(() => {
 }, 1000);
 let bulkToken
 getProgress = () => {
-    fetchData(`http://localhost:3000/bulkupload?token=${bulkToken}`).then(data => {
+    fetchData(`/bulkupload?token=${bulkToken}`).then(data => {
         let files = data.data.filecount;
         let uploaded = data.data.uploaded;
         let per = Math.floor((uploaded / files) * 100);
@@ -896,7 +896,7 @@ bulkFileUploadBtn.addEventListener('click', () => {
     pond.getFiles().forEach(file => {
         data.append('files', file.file)
     })
-    fetchData(`http://localhost:3000/bulkupload?id=${getId(currentSheetLink)}`, {
+    fetchData(`/bulkupload?id=${getId(currentSheetLink)}`, {
         method: "POST",
         body: data,
     }).then(res => {
