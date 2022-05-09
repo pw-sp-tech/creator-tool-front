@@ -880,7 +880,7 @@ getProgress = () => {
         if (per < 100) {
             setTimeout(() => {
                 getProgress()
-            }, 2000);
+            }, 3500);
         } else {
             showCountDiv.innerHTML = `Uploaded successfully`
         }
