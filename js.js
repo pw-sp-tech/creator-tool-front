@@ -383,10 +383,8 @@ const tileContainer = document.querySelector(".tileContainer")
 const tile = document.querySelector(".tile")
 
 function setPendingData(pendingData) {
-    if (document.querySelector(".new-tile")) {
-        document.querySelectorAll(".new-tile").forEach((el) => el.remove())
 
-    }
+
 
     pendingData.forEach((el) => {
         var newTile = tile.cloneNode(true)
@@ -414,7 +412,13 @@ function setPendingData(pendingData) {
         newTile.classList.add("new-tile")
         tileContainer.append(newTile)
     })
+    if (bulkUpload.classList.contains('active')) {
+        if (document.querySelector(".new-tile")) {
+            document.querySelectorAll(".new-tile").forEach((el) => el.remove())
 
+        }
+        return;
+    }
 }
 
 // pop up functions
@@ -672,7 +676,13 @@ function setRejectedData(arr) {
             tileContainer.append(newTile)
         })
     }
+    if (bulkUpload.classList.contains('active')) {
+        if (document.querySelector(".new-tile")) {
+            document.querySelectorAll(".new-tile").forEach((el) => el.remove())
 
+        }
+        return;
+    }
 }
 
 function showQcHistory(el) {
@@ -892,6 +902,8 @@ bulkFileUploadBtn.addEventListener('click', () => {
     //     }
     // })
     // showCountDiv.querySelector(".show-count-divh2").innerHTML = `The following PDFs are missing :<br> ${missingFiles.join("<br>")}`
+    bulkFileUploadBtn.classList.add('hidden');
+    showCountDiv.querySelector(".show-count-divh2").innerHTML = `Starting Bulk Uploading...DO NOT REFRESH THE PAGE.`
     let data = new FormData()
     pond.getFiles().forEach(file => {
         data.append('files', file.file)
