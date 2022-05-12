@@ -942,7 +942,7 @@ bulkFileUploadBtn.addEventListener('click', async() => {
         if (bulkfilesObj.sheet) {
             data.append('sheet', bulkfilesObj.sheet)
         }
-        let res = await fetchData(`http://localhost:3000/bulkupload?id=${getId(currentSheetLink)}`, {
+        let res = await fetchData(`/bulkupload?id=${getId(currentSheetLink)}`, {
             method: "POST",
             body: data,
         })
