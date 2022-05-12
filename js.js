@@ -383,9 +383,9 @@ const tileContainer = document.querySelector(".tileContainer")
 const tile = document.querySelector(".tile")
 
 function setPendingData(pendingData) {
-
-
-
+    if (document.querySelector(".new-tile")) {
+        document.querySelectorAll(".new-tile").forEach((el) => el.remove())
+    }
     pendingData.forEach((el) => {
         var newTile = tile.cloneNode(true)
         newTile.querySelector(".chapter-name").innerText = el[5]
@@ -475,15 +475,38 @@ function popupHide() {
     popup.querySelector(".quePopup").classList.add("hidden");
 }
 // show video name
+function getVideoDimensionsOf(url) {
+    return new Promise(resolve => {
+        const video = document.createElement('video');
+        video.addEventListener("loadedmetadata", () => {
+            const height = video.videoHeight;
+            const width = video.videoWidth;
+            console.log(height)
+            resolve({ height, width });
+        }, false);
+        video.src = url;
+
+    });
+}
+
+
 function showvideoName(e) {
-    e.target.parentElement.parentElement.parentElement.parentElement.querySelector(".previewBeforeSubmit").classList.remove("hidden");
     let file = e.target.files[0];
     let url = URL.createObjectURL(file);
-    e.target.parentElement.parentElement.parentElement.parentElement.querySelector(".previewBeforeSubmit").addEventListener('click', () => {
-        previewVideo(url, true)
-    })
-    var videoName = this.parentElement.parentElement.parentElement.parentElement.querySelector(".videoSelected")
-    videoName.innerText = this.files[0].name
+    getVideoDimensionsOf(url).then((dimension) => {
+            if (dimension.height != 720 || dimension.width != 1280) {
+                e.target.value = ''
+                alert("Video dimension is not acceptable")
+
+            } else {
+                e.target.parentElement.parentElement.parentElement.parentElement.querySelector(".previewBeforeSubmit").classList.remove("hidden");
+                e.target.parentElement.parentElement.parentElement.parentElement.querySelector(".previewBeforeSubmit").addEventListener('click', () => {
+                    previewVideo(url, true)
+                })
+                var videoName = this.parentElement.parentElement.parentElement.parentElement.querySelector(".videoSelected")
+                videoName.innerText = this.files[0].name
+            }
+        })
         // document.querySelectorAll(".videoInput").forEach(el => {
         //     el.disabled = true
         //     el.parentElement.style.backgroundImage='none'
