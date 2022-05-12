@@ -910,7 +910,11 @@ getProgress = () => {
     })
 
 }
-bulkFileUploadBtn.addEventListener('click', () => {
+let bulkfilesObj = {
+    "filesuploaded": 0,
+    "filescount": 0
+}
+bulkFileUploadBtn.addEventListener('click', async() => {
     // let missingFiles = []
     // let fileNameArr = []
     // bulkFiles.forEach(file => {
@@ -927,16 +931,36 @@ bulkFileUploadBtn.addEventListener('click', () => {
     // showCountDiv.querySelector(".show-count-divh2").innerHTML = `The following PDFs are missing :<br> ${missingFiles.join("<br>")}`
     bulkFileUploadBtn.classList.add('hidden');
     showCountDiv.querySelector(".show-count-divh2").innerHTML = `Starting Bulk Uploading...DO NOT REFRESH THE PAGE.`
-    let data = new FormData()
-    pond.getFiles().forEach(file => {
-        data.append('files', file.file)
-    })
-    fetchData(`/bulkupload?id=${getId(currentSheetLink)}`, {
-        method: "POST",
-        body: data,
-    }).then(res => {
-        bulkToken = res.token
-        showCountDiv.innerHTML = `Uploading...`
-        setTimeout(getProgress, 2000);
-    })
+    let files = pond.getFiles();
+    bulkfilesObj.filescount = files.length;
+    for (let fl = 0; fl < files.length; fl++) {
+        let file = files[fl]
+        let data = new FormData()
+        data.append('files', file.file);
+        data.append('filesuploaded', bulkfilesObj.filesuploaded);
+        data.append('filescount', bulkfilesObj.filescount);
+        if (bulkfilesObj.sheet) {
+            data.append('sheet', bulkfilesObj.sheet)
+        }
+        let res = await fetchData(`http://localhost:3000/bulkupload?id=${getId(currentSheetLink)}`, {
+            method: "POST",
+            body: data,
+        })
+        if (res.status == "ERROR" && res.msg == "WRONG_BOOK_SELECTED") {
+            showCountDiv.innerHTML = "WRONG BOOK SELECTED...Please refresh the page and upload files with correct book selected."
+            return;
+        }
+        let filesUploaded = res.filesuploaded;
+        bulkfilesObj.filesuploaded = filesUploaded;
+        bulkfilesObj.sheet = res.sheet;
+        let per = Math.floor((filesUploaded / bulkfilesObj.filescount) * 100);
+        if (per == 100) {
+            showCountDiv.innerHTML = `All files uploaded successfully. Please refresh the page before uploading new files.`
+        } else {
+            showCountDiv.innerHTML = `Uploaded ${filesUploaded} files out of ${bulkfilesObj.filescount} (${per}%) PLEASE DO NOT REFRESH OR CLOSE THE PAGE`
+        }
+
+
+    }
+
 })
