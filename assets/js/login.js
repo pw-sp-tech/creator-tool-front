@@ -114,7 +114,7 @@ function login() {
                 localStorage.setItem("userName", data.user.fullName);
                 localStorage.setItem("userEmail", data.user.email)
                 window.location.href = "home.html";
-            } else if (data.ERROR == "USER_NOT_FOUND") {
+            } else if (data.message == "USER_NOT_FOUND") {
                 showAlert("Invalid Email or Password")
                 loginBtn.innerHTML = `Login`
             }

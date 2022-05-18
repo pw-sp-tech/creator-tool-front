@@ -126,6 +126,9 @@ const workspaceSwitch = document.querySelector(".workspaceSwitch")
 const loaderText = document.querySelector(".loader-text");
 const showCountDiv = document.querySelector(".show-count-div")
 const count = document.querySelector(".count");
+const dangerAlert = document.querySelector(".danger-alert")
+const messageBox = document.querySelector(".message-box")
+const errorMessage = document.querySelector(".error-message")
 
 var assignments, currentSheetLink, onPage = 1
 var NomenclatureData = [];
@@ -240,6 +243,7 @@ navLink.forEach((link) => {
 
 // get assignment
 let verifyData;
+var userData
 fetchData("/user/verify", {
     method: "POST",
     headers: {
@@ -261,40 +265,92 @@ fetchData("/user/verify", {
         })
     } else {
         verifyData = data;
-
         loaderText.innerHTML = `Please Wait... Getting your assignment`;
-
-        getAssignment(data);
+        userData = data
+        addProjectFilter(data)
     }
 });
 
-function getAssignment(data) {
 
-    fetchData("/user/assignments", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            authorization: token,
-        },
-        body: JSON.stringify({
-            designation: data.designation,
-            email: data.email,
-            employementType: data.employementType,
-            gigId: data.gigId,
-            name: data.name,
-            status: data.status,
-            subject: data.subject,
-            uniqueId: data.name,
-            elt: eltObj[data.project]
-        }),
-    }).then((data) => {
-        assignments = data.assignmentsArr;
-        NomenclatureData = data.NomenclatureData;
-        welcomeName.innerHTML = `${String(userName).split(" ")[0]}`;
+//  project filter
+
+const projectFilter = document.querySelector(".project-filter")
+projectFilter.addEventListener("change", getProject)
+
+function addProjectFilter(data) {
+    var projects = data.project.toString().split("+")
+    if (projects.length > 1) {
+        for (var pn = 0; pn < projects.length; pn++) {
+            var filterOption = document.createElement("option")
+            filterOption.value = projects[pn]
+            filterOption.innerText = projects[pn]
+            projectFilter.append(filterOption)
+        }
+        projectFilter.parentElement.classList.remove("hidden")
         verifyWindow.classList.add("hidden")
-        homeWindow.classList.remove("hidden")
-        totalBooks()
-    });
+        dangerAlert.classList.remove("hidden")
+        dangerAlert.classList.add("back-none")
+        errorMessage.innerText = "Select a project to continue."
+
+    } else {
+        getAssignment(data)
+    }
+
+}
+
+function getProject() {
+    var projectName = projectFilter.value
+    var data = userData
+    data.project = projectName
+    getAssignment(data)
+
+}
+
+
+function getAssignment(data) {
+    let userName2=data.name
+    dangerAlert.classList.add("hidden")
+    projectFilter.parentElement.classList.add("hidden")
+    verifyWindow.classList.remove("hidden")
+    if (!eltObj[data.project]) {
+        verifyWindow.classList.add("hidden")
+        dangerAlert.classList.remove("hidden")
+        dangerAlert.classList.remove("back-none")
+        errorMessage.innerText = "Project not found."
+    } else {
+
+        fetchData("/user/assignments", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                authorization: token,
+            },
+            body: JSON.stringify({
+                designation: data.designation,
+                email: data.email,
+                employementType: data.employementType,
+                gigId: data.gigId,
+                name: data.name,
+                status: data.status,
+                subject: data.subject,
+                uniqueId: data.name,
+                elt: eltObj[data.project]
+            }),
+        }).then((data) => {
+            assignments = data.assignmentsArr;
+            verifyWindow.classList.add("hidden")
+            if(assignments.length>0){
+            NomenclatureData = data.NomenclatureData;
+            welcomeName.innerHTML = userName2;
+            homeWindow.classList.remove("hidden")
+            totalBooks()
+            }else {
+                dangerAlert.classList.remove("hidden")
+                dangerAlert.classList.remove("back-none")
+                errorMessage.innerText = "You have not been assigned any task in this project."
+            }
+        });
+    }
 }
 
 // total books==

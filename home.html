@@ -8,7 +8,8 @@
     <link rel="shortcut icon" href="assets/img/fevicon.png" type="image/png">
     <script src="https://kit.fontawesome.com/2e507ab521.js" crossorigin="anonymous"></script>
     <!-- Google fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,500;0,600;1,300;1,400&display=swap"
+        rel="stylesheet">
 
     <link rel="stylesheet" href="light.css">
     <link rel="stylesheet" href="main.css">
@@ -34,6 +35,20 @@
         <p class="loader-text" style="top: 150px; width: 60%;text-align: center;">Please wait...</p>
 
     </div>
+    <div class="message-box hidden">
+        <h3 class="message-text">select a project to continue</h3>
+    </div>
+    <div class="alert danger-alert hidden">
+        <h3 class="error-message">Danger Alert Message</h3>
+    </div>
+    <div class="dynamic-filter-container filterContainer2 hidden">
+        <label for="filterSelect" class="margin-left">Select Project:</label>
+        <select class="filterSelect project-filter" id="filterSelect">
+            <option value="" hidden selected disabled>Filter By Status&nbsp;&#9660;</option>
+        </select>
+
+
+    </div>
     <div class="home-window hidden">
         <nav class="navbar">
             <h1 class="welcomeText">Welcome, <span class="welcomeName"></span></h1>
@@ -51,7 +66,8 @@
                 <span class="filter curser-pointer navbar__list pending active">Pending</span>
                 <span class="filter curser-pointer navbar__list rejected">Rejected</span>
                 <span class="filter curser-pointer navbar__list qc-progress">QC In Progress</span>
-                <span class="filter curser-pointer navbar__list bulk-upload" style="color: aqua;text-shadow: 0px 0px 3px #000000;">Bulk Uploading</span>
+                <span class="filter curser-pointer navbar__list bulk-upload"
+                    style="color: aqua;text-shadow: 0px 0px 3px #000000;">Bulk Uploading</span>
             </div>
             <div>
                 <span>Switch Book ►</span>
@@ -116,7 +132,8 @@
                                 class="propValue demo deadline" id="demo"></span></span>
                     </div>
                     <div class="prop"><span class="propName video-name-div">Files Selected : <span
-                                class="propValue videoSelected">None</span>, <span class="propValue pdfSelected">None</span></span>
+                                class="propValue videoSelected">None</span>, <span
+                                class="propValue pdfSelected">None</span></span>
                     </div>
                     <button class="previewBeforeSubmit hidden" style="min-width: fit-content;">►</button>
                 </div>

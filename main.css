@@ -409,6 +409,21 @@ option {
     animation: animate 4s linear infinite;
 }
 
+
+.filterContainer2 {
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    padding: 10px 20px;
+    width: 95%;
+    margin: 0 10px;
+    /* position: relative; */
+    margin-top: 70px;
+    position: relative;
+}
+.margin-left{
+    margin-left: 600px;
+}
+
 @keyframes animate {
     0% {
         transform: rotate(0deg);
@@ -634,4 +649,37 @@ textarea {
 
 .feedbackReason {
     border: #1e1b3254 2px solid;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
+
+.error-message{
+    font-family:Quicksand;
+    color: white;
+}
+.alert{
+  width:50%;
+  margin:200px auto;
+  padding:30px;
+  position:relative;
+  border-radius:5px;
+  text-align: center;
+  box-shadow:0 0 15px 5px;
+  margin-bottom: 20px;
+  background-color: rgba(255, 0, 0, 0.21);
+}
+.message-box{
+    width:50%;
+  margin:200px auto;
+  padding:30px;
+  position:relative;
+  border-radius:5px;
+}
+.message-text{
+    font-family:Quicksand;
+    color: white;
+}
+.back-none{
+    box-shadow: none;
+    background: none;
 }
