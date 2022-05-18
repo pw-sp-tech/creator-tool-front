@@ -143,9 +143,9 @@ function login() {
 
                 })
             }).then(data => {
-                if (data.msg == "Successfully Signed Up") {
+                if (data.message == "Successfully Signed Up") {
                     window.location.href = 'login.html'
-                } else if (data.ERROR == "USER_ALREADY_EXIST") {
+                } else if (data.message == "USER_ALREADY_EXIST") {
                     showAlert("USER_ALREADY_EXIST")
                     loginBtn.innerHTML = "Register"
                 }
