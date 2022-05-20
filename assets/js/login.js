@@ -143,7 +143,7 @@ function login() {
 
                 })
             }).then(data => {
-                if (data.message == "Successfully Signed Up") {
+                if (data.message == "USER_REGISTERED_SUCCESSFULLY") {
                     window.location.href = 'login.html'
                 } else if (data.message == "USER_ALREADY_EXIST") {
                     showAlert("USER_ALREADY_EXIST")
