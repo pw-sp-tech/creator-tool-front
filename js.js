@@ -134,7 +134,7 @@ var assignments, currentSheetLink, onPage = 1
 var NomenclatureData = [];
 var eltObj = {
         "Foundation": "1UnUcc4BCQ4AZXvY--WKdaS9GoyAou1gi6dFuZqMWEqo",
-        "IBU": "1reYKLTsqGjm_ZsD0AcokhY6Iypbweu6kHDh4hUtUkOU",
+        "IBU": "1gUkN2JRmewI9xvsa9SYzaIvtajbEX9Hyq9JbTXHTan4",
         "Infinite Practice": "1reYKLTsqGjm_ZsD0AcokhY6Iypbweu6kHDh4hUtUkOU"
     }
     // windows
@@ -462,7 +462,12 @@ function setPendingData(pendingData) {
                 newTile.classList.add("border-red")
             }
             newTile.querySelector(".demo").innerText = setTime
-        }, 1000);
+        }, 50);
+        var setTime = deadline(el[36])
+            if (setTime == "EXPIRED") {
+                newTile.classList.add("border-red")
+            }
+            newTile.querySelector(".demo").innerText = setTime
         newTile.querySelector(".sme-round").innerText = 1
         newTile.classList.remove("hidden")
         newTile.classList.add("new-tile")

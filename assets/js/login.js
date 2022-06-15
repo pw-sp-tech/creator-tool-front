@@ -105,21 +105,21 @@ function showAlert(text) {
     alert.classList.remove("hidden");
     setTimeout(() => {
         alert.classList.add("hidden");
-    }, 3000);
+    }, 5000);
 }
 function showAlert2(text) {
     alert2.querySelector(".alert-text").innerText = text
     alert2.classList.remove("hidden");
     setTimeout(() => {
         alert2.classList.add("hidden");
-    }, 3000);
+    }, 5000);
 }
 function showAlert3(text) {
     alert3.querySelector(".alert-text").innerText = text
     alert3.classList.remove("hidden");
     setTimeout(() => {
         alert3.classList.add("hidden");
-    }, 3000);
+    }, 5000);
 }
 
 function login() {
@@ -127,6 +127,7 @@ function login() {
     if (id === "1") {
         let email = emailDiv.querySelector('input').value;
         let pass = passDiv.querySelector('input').value;
+        if(email!="" && pass !=""){
         loginBtn.innerHTML = `Logging In...`
         fetchData('/auth/signin', {
             method: "POST",
@@ -139,6 +140,7 @@ function login() {
 
             })
         }).then(data => {
+            loginBtn.innerHTML = `Login`
             if (data.user && data.user.token) {
                 if(data.user.resettoken==null){
                 localStorage.setItem('accessToken', data.user.token);
@@ -151,9 +153,11 @@ function login() {
                 }
             } else if (data.message == "USER_NOT_FOUND") {
                 showAlert("Invalid Email or Password")
-                loginBtn.innerHTML = `Login`
             }
         })
+    }else{
+        showAlert("Fill all the  fields")
+    }
     } else {
         let name = fullNameDiv.querySelector('input').value;
         let email = emailDiv.querySelector('input').value;
@@ -202,9 +206,8 @@ document.querySelector("#forgot-pass-form").addEventListener('submit', (e) => {
 function sendForgotMail() {
     const mailId = forgotPassBox.querySelector(".email-div").querySelector('input').value;
     if (!mailId) {
-        console.log("enter mail")
     } else {
-        sendMailBtn.innerText="Sending Mail..."
+        sendMailBtn.innerText="Sending Email..."
         fetchData('/auth/forgotpass', {
             method: "POST",
             headers: {
@@ -215,9 +218,9 @@ function sendForgotMail() {
             })
         }).then(data => {
             if(data.status=="OKAY"){
-            sendMailBtn.innerText="Mail Sent"
+            sendMailBtn.innerText="Email Sent"
             }else{
-                showAlert2("Mail Not found")
+                showAlert2("Email Address Not found")
                 sendMailBtn.innerText="Send password reset email"
             }
         })
