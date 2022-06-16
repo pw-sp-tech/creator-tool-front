@@ -64,7 +64,6 @@ button:hover {
   background-color: #49f788 !important;
 }
 button:hover {
-  background-position: 100% 0;
   -moz-transition: all 0.4s ease-in-out;
   -o-transition: all 0.4s ease-in-out;
   -webkit-transition: all 0.4s ease-in-out;
@@ -741,4 +740,16 @@ textarea {
 .login-btn:hover {
   background-color: transparent !important;
   color: #2ad463;
+}
+.alert-danger {
+  color: #842029;
+  background-color: #f8d7da;
+  border-color: #f5c2c7;
+  width: 100%;
+  box-shadow: none;
+  margin-top: 0;
+}
+.alert-danger button {
+  top: -11.4px !important;
+  right: -60px !important;
 }
