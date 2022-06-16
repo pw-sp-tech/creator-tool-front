@@ -753,3 +753,6 @@ textarea {
   top: -11.4px !important;
   right: -60px !important;
 }
+.send-mail-btn {
+  margin-left: 0 !important;
+}
