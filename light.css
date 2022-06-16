@@ -1,116 +1,118 @@
 body.light-theme {
-    border-radius: 10px;
-    height: 100vh;
-    font-family: 'nunito', sans-serif;
-    background: linear-gradient(to bottom right, #e4e4e4, #e4e4e4);
-    color: #000000;
+  border-radius: 10px;
+  height: 100vh;
+  font-family: "nunito", sans-serif;
+  /* background-color: #acacacbb; */
+  background: #f7f4f4e7;
+  color: #000000;
 }
 
-body.light-theme button {
-    background: #556ee6;
-    font-weight: 600;
-    color: rgb(255, 255, 255);
-    cursor: pointer;
-    text-align: center;
-    border: none;
-    background-size: 300% 100%;
-    border-radius: 50px;
-    -moz-transition: all .4s ease-in-out;
-    -o-transition: all .4s ease-in-out;
-    -webkit-transition: all .4s ease-in-out;
-    transition: all .4s ease-in-out;
-    font-size: 15px;
-    padding: 5px 10px;
-    border: none;
-    margin-left: 15px;
-    font-family: 'Nunito', sans-serif;
-    min-width: 130px;
-    min-height: 35px;
-    box-sizing: border-box;
-}
+/* body.light-theme button {
+  background: #710117;
+  font-weight: 600;
+  color: rgb(255, 255, 255);
+} */
 
 body.light-theme .header {
-    display: flex;
-    justify-content: space-between;
-    color: rgb(0, 0, 0);
-    border: 2px solid rgba(30, 30, 30, 0.525);
-    padding: 10px 20px;
-    width: 98%;
-    margin: 0 10px;
+  display: flex;
+  justify-content: space-between;
+  color: rgb(0, 0, 0);
+  border: 2px solid rgba(30, 30, 30, 0.525);
+  padding: 10px 20px;
+  width: 98%;
+  margin: 0 10px;
+}
+body.light-theme .active {
+  text-decoration: underline 2px solid #000 !important;
 }
 
 body.light-theme .tile {
-    background: white;
-    padding: 5px 15px;
-    width: 98%;
-    height: fit-content;
-    min-height: 70px;
-    border-radius: 20px;
-    min-width: 650px;
-    margin: 10px 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
+  background: #ffffffe7;
+  /* border: 0.5px solid #ffffff; */
+  box-shadow: 7px 8px 17px -2px #666666;
 }
 
 body.light-theme .videoUploadForm {
-    padding-right: 12px;
-    border: 1px solid rgba(30, 30, 30, 0.525);
-    border-radius: 15px;
+  padding-right: 12px;
+  border: 1px solid rgba(30, 30, 30, 0.525);
+  border-radius: 15px;
 }
 
 body.light-theme select {
-    width: fit-content;
-    font-size: 15px;
-    font-family: 'nunito', sans-serif;
-    background: #556ee6;
-    color: white;
-    border: white 2px solid;
-    border-radius: 20px;
-    padding: 5px 5px;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    text-align: center;
-    min-width: 200px;
-    /* margin: 5px 20px; */
+  width: fit-content;
+  font-size: 15px;
+  font-family: "nunito", sans-serif;
+  background: #0b1c48;
+  color: white;
+  border: white 2px solid;
+  border-radius: 20px;
+  padding: 5px 5px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-align: center;
+  min-width: 200px;
+  /* margin: 5px 20px; */
+}
+body.light-theme select option {
+  color: #fff;
 }
 
 body.light-theme .videoInputLable {
-    background: #556ee6;
-    box-shadow: 0 4px 15px 0 rgba(252, 104, 110, 0.75);
-    font-weight: 600;
-    color: #fff;
-    cursor: pointer;
-    text-align: center;
-    border: none;
-    background-size: 300% 100%;
-    border-radius: 50px;
-    -moz-transition: all .4s ease-in-out;
-    -o-transition: all .4s ease-in-out;
-    -webkit-transition: all .4s ease-in-out;
-    transition: all .4s ease-in-out;
-    font-size: 15px;
-    padding: 5px 10px;
-    border: none;
-    margin-left: 15px;
-    font-family: 'Nunito', sans-serif;
-    min-width: 250px;
-    min-height: 35px;
-    box-sizing: border-box;
+  background: #0b1c48;
+  font-weight: 600;
+  color: #fff;
 }
-
+body.light-theme .videoInputLable:hover {
+  background: #051233 !important;
+}
+body.light-theme .pdfInputLable {
+  background: #0b1c48;
+  color: #fff;
+}
+body.light-theme .pdfInputLable:hover {
+  background: #051233 !important;
+}
+body.light-theme .lds-ring div {
+  border: 8px solid #000;
+  border-color: rgb(0, 0, 0) transparent transparent transparent;
+}
 body.light-theme .prop {
-    padding: 0 5px;
-    margin: 10px 0;
+  padding: 0 5px;
+  margin: 10px 0;
 }
 
 body.light-theme .propName {
-    color: rgba(0, 0, 0, 0.774);
-    border: rgba(255, 255, 255, 0.354) 2px solid;
-    border-radius: 15px;
-    padding: 0 5px;
+  color: rgb(0, 0, 0);
+  border: rgba(0, 0, 0, 0.87) 1px solid;
+  border-radius: 15px;
+  padding: 0 5px;
+}
+body.light-theme .feedbackPopup {
+  align-items: center;
+  flex-direction: column;
+}
+body.light-theme .feedbackPopup option {
+  color: #fff;
+}
+body.light-theme .bulk-upload {
+  color: #000000 !important;
+  text-shadow: none !important;
+}
+body.light-theme .navbar {
+  border: 2px solid rgba(30, 30, 30, 0.525);
+  border-bottom: 1px;
+}
+body.light-theme .loader-mini {
+  color: white;
+}
+body.light-theme .loader-mini .lds-ring div {
+  border: 8px solid rgb(255, 255, 255);
+  border-color: rgb(255, 255, 255) transparent transparent transparent;
+}
+body.light-theme .switch-mode {
+  background-color: #051233;
+  color: white;
 }
