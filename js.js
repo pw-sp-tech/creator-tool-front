@@ -255,7 +255,9 @@ fetchData("/user/verify", {
     email: email,
   }),
 }).then((data) => {
+  let loader = document.querySelector(".lds-ring");
   if (data.ERROR == "USER_NOT_FOUND") {
+    loader.classList.add("hidden");
     loaderText.innerHTML =
       "You're not authorized to use this app. If this is a mistake, Please contact your manager.";
     document.querySelector(".go-to-login").classList.remove("hidden");
@@ -266,6 +268,7 @@ fetchData("/user/verify", {
       el.remove();
     });
   } else {
+    loader.classList.remove("hidden");
     verifyData = data;
     loaderText.innerHTML = `Please Wait... Getting your assignment`;
     userData = data;
