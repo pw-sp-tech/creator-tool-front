@@ -277,6 +277,10 @@ button:hover {
   width: 70%;
   height: 80%;
 }
+.select_project > h3 {
+  font-family: sans-serif !important;
+  font-size: 1.2rem !important;
+}
 
 .vidPopup > video {
   width: 100%;
@@ -440,16 +444,17 @@ option {
 
 .filterContainer2 {
   color: white;
-  border: 2px solid rgba(255, 255, 255, 0.3);
   padding: 10px 20px;
   width: 95%;
   margin: 0 10px;
-  /* position: relative; */
-  margin-top: 70px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
 }
-.margin-left {
-  margin-left: 600px;
+.filterContainer2 select {
+  margin-left: 2.5rem;
 }
 
 @keyframes animate {
@@ -748,6 +753,8 @@ textarea {
   width: 100%;
   box-shadow: none;
   margin-top: 0;
+  padding: 1rem 0;
+  margin-bottom: 1rem;
 }
 .alert-danger button {
   top: -11.4px !important;
@@ -755,4 +762,7 @@ textarea {
 }
 .send-mail-btn {
   margin-left: 0 !important;
+}
+.danger-alert {
+  box-shadow: none !important;
 }

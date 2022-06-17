@@ -116,3 +116,16 @@ body.light-theme .switch-mode {
   background-color: #051233;
   color: white;
 }
+
+body.light-theme .danger-alert {
+  background-color: rgba(255, 0, 0, 0.603) !important;
+  color: #000 !important;
+  box-shadow: 0px 0px 9px 6px rgba(0, 0, 0, 0.288) !important;
+}
+body.light-theme .select_project > h3 {
+  color: #000 !important;
+}
+body.light-theme .select_project {
+  background-color: #f7f4f4e7 !important;
+  box-shadow: none !important;
+}

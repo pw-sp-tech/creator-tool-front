@@ -257,7 +257,7 @@ fetchData("/user/verify", {
 }).then((data) => {
   if (data.ERROR == "USER_NOT_FOUND") {
     loaderText.innerHTML =
-      "You're not authorized to use this app. If this is a mistake, Please contact to your manager.";
+      "You're not authorized to use this app. If this is a mistake, Please contact your manager.";
     document.querySelector(".go-to-login").classList.remove("hidden");
     document.querySelector(".go-to-login").addEventListener("click", () => {
       window.location.href = "login.html";
@@ -291,6 +291,7 @@ function addProjectFilter(data) {
     verifyWindow.classList.add("hidden");
     dangerAlert.classList.remove("hidden");
     dangerAlert.classList.add("back-none");
+    dangerAlert.classList.add("select_project");
     errorMessage.innerText = "Select a project to continue.";
   } else {
     getAssignment(data);
@@ -307,13 +308,14 @@ function getProject() {
 function getAssignment(data) {
   let userName2 = data.name;
   dangerAlert.classList.add("hidden");
+  dangerAlert.classList.remove("select_project");
   projectFilter.parentElement.classList.add("hidden");
   verifyWindow.classList.remove("hidden");
   if (!eltObj[data.project]) {
     verifyWindow.classList.add("hidden");
     dangerAlert.classList.remove("hidden");
     dangerAlert.classList.remove("back-none");
-    errorMessage.innerText = "Project not found.";
+    errorMessage.innerText = "Project not found!!";
   } else {
     fetchData("/user/assignments", {
       method: "POST",
@@ -397,6 +399,7 @@ function getFilterBook() {
 
 // fetch pending data======
 function pendingWork(bookdata) {
+  loadingWindow.classList.remove("hidden");
   fetchData("/tracker/assignments", {
     method: "POST",
     headers: {
@@ -764,6 +767,7 @@ function uploadpdf() {
 }
 //  fetch rejected data========
 function rejWork(bookdata) {
+  loadingWindow.classList.remove("hidden");
   fetchData("/tracker/assignments/rejected", {
     method: "POST",
     headers: {
@@ -912,6 +916,7 @@ function previewVideo(el, isFile) {
 // In qc work data
 
 function inQcWork(bookdata) {
+  loadingWindow.classList.remove("hidden");
   fetchData("/tracker/assignments/submitted", {
     method: "POST",
     headers: {
