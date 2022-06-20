@@ -24,8 +24,8 @@ var pond = FilePond.create(filePondInput, {
         .querySelector(
           ".show-count-divh2"
         ).innerHTML = `The following PDFs are missing :<br> ${missingFiles.join(
-        "<br>"
-      )}`;
+          "<br>"
+        )}`;
       bulkFileUploadBtn.classList.add("hidden");
     } else if (bulkFiles.length > 0) {
       document
@@ -114,7 +114,7 @@ switchModeBtn.addEventListener("click", () => {
     switchModeBtn.innerText = "Light Mode ☀";
   }
 });
-const urlPrefix = "https://creator-tool-back.herokuapp.com";
+const urlPrefix ='http://localhost:3000'  // "https://creator-tool-back.herokuapp.com";
 const userName = localStorage.getItem("userName");
 const email = localStorage.getItem("userEmail");
 const welcomeName = document.querySelector(".welcomeName");
@@ -138,9 +138,9 @@ var assignments,
   onPage = 1;
 var NomenclatureData = [];
 var eltObj = {
-  Foundation: "1UnUcc4BCQ4AZXvY--WKdaS9GoyAou1gi6dFuZqMWEqo",
-  IBU: "1gUkN2JRmewI9xvsa9SYzaIvtajbEX9Hyq9JbTXHTan4",
-  "Infinite Practice": "1reYKLTsqGjm_ZsD0AcokhY6Iypbweu6kHDh4hUtUkOU",
+  Foundation: ["1UnUcc4BCQ4AZXvY--WKdaS9GoyAou1gi6dFuZqMWEqo", 35],
+  IBU: ["1gUkN2JRmewI9xvsa9SYzaIvtajbEX9Hyq9JbTXHTan4", 0],
+  "Infinite Practice": ["1reYKLTsqGjm_ZsD0AcokhY6Iypbweu6kHDh4hUtUkOU", 35],
 };
 // windows
 const verifyWindow = document.querySelector(".verifyWindow");
@@ -338,18 +338,25 @@ function getAssignment(data) {
         elt: eltObj[data.project],
       }),
     }).then((data) => {
-      assignments = data.assignmentsArr;
       verifyWindow.classList.add("hidden");
-      if (assignments.length > 0) {
-        NomenclatureData = data.NomenclatureData;
-        welcomeName.innerHTML = userName2;
-        homeWindow.classList.remove("hidden");
-        totalBooks();
+      if (data.status=="OKAY") {
+        assignments = data.assignmentsArr;
+        if (assignments.length > 0) {
+          NomenclatureData = data.NomenclatureData;
+          welcomeName.innerHTML = userName2;
+          homeWindow.classList.remove("hidden");
+          totalBooks();
+        } else {
+          dangerAlert.classList.remove("hidden");
+          dangerAlert.classList.remove("back-none");
+          errorMessage.innerText =
+            "You have not been assigned any task in this project.";
+        }
       } else {
         dangerAlert.classList.remove("hidden");
         dangerAlert.classList.remove("back-none");
         errorMessage.innerText =
-          "You have not been assigned any task in this project.";
+          "Somthing went wrong. Connect your manager";
       }
     });
   }
@@ -388,7 +395,7 @@ function getFilterBook() {
     if (el[2] == bookName && el[1] == filterClass) {
       bookdata.link = getId(el[7]);
       currentSheetLink = el[7];
-      bookdata.uniqueId = el[10];
+      bookdata.uniqueId = userData.name;
     }
   });
   if (onPage == 1) {
