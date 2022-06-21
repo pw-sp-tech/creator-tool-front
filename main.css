@@ -234,6 +234,8 @@ button:hover {
   margin: 8px 0px;
   height: 25%;
   overflow: auto;
+  text-align: center;
+
 }
 
 .uploadTime {

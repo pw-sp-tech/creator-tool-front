@@ -114,7 +114,7 @@ switchModeBtn.addEventListener("click", () => {
     switchModeBtn.innerText = "Light Mode ☀";
   }
 });
-const urlPrefix ="https://creator-tool-back.herokuapp.com";
+const urlPrefix = "https://creator-tool-back.herokuapp.com";
 const userName = localStorage.getItem("userName");
 const email = localStorage.getItem("userEmail");
 const welcomeName = document.querySelector(".welcomeName");
@@ -124,6 +124,7 @@ const pending = document.querySelector(".pending");
 const qcProgress = document.querySelector(".qc-progress");
 const bulkUpload = document.querySelector(".bulk-upload");
 const rejected = document.querySelector(".rejected");
+const approved = document.querySelector(".approved");
 const manageTeam = document.querySelector(".teamSwitch");
 const workspaceSwitch = document.querySelector(".workspaceSwitch");
 const loaderText = document.querySelector(".loader-text");
@@ -209,6 +210,7 @@ navLink.forEach((link) => {
       document.querySelector(".filepond").classList.add("hidden");
       bulkFileUploadBtn.classList.add("hidden");
       qcProgress.classList.remove("active");
+      approved.classList.remove("active");
       rejected.classList.remove("active");
       pending.classList.add("active");
       bulkUpload.classList.remove("active");
@@ -218,6 +220,7 @@ navLink.forEach((link) => {
       document.querySelector(".filepond").classList.add("hidden");
       bulkFileUploadBtn.classList.add("hidden");
       qcProgress.classList.remove("active");
+      approved.classList.remove("active");
       rejected.classList.add("active");
       pending.classList.remove("active");
       bulkUpload.classList.remove("active");
@@ -227,15 +230,27 @@ navLink.forEach((link) => {
       document.querySelector(".filepond").classList.add("hidden");
       bulkFileUploadBtn.classList.add("hidden");
       rejected.classList.remove("active");
+      approved.classList.remove("active");
       qcProgress.classList.add("active");
       pending.classList.remove("active");
       bulkUpload.classList.remove("active");
       onPage = 3;
       getFilterBook();
+    } else if (link.innerText === "Approved") {
+      document.querySelector(".filepond").classList.add("hidden");
+      bulkFileUploadBtn.classList.add("hidden");
+      rejected.classList.remove("active");
+      qcProgress.classList.remove("active");
+      approved.classList.add("active");
+      pending.classList.remove("active");
+      bulkUpload.classList.remove("active");
+      onPage = 4;
+      getFilterBook();
     } else {
       rejected.classList.remove("active");
       qcProgress.classList.remove("active");
       pending.classList.remove("active");
+      approved.classList.remove("active");
       bulkUpload.classList.add("active");
       initUploadPage();
     }
@@ -339,7 +354,7 @@ function getAssignment(data) {
       }),
     }).then((data) => {
       verifyWindow.classList.add("hidden");
-      if (data.status=="OKAY") {
+      if (data.status == "OKAY") {
         assignments = data.assignmentsArr;
         if (assignments.length > 0) {
           NomenclatureData = data.NomenclatureData;
@@ -402,8 +417,10 @@ function getFilterBook() {
     pendingWork(bookdata);
   } else if (onPage == 2) {
     rejWork(bookdata);
-  } else {
+  } else if (onPage == 3) {
     inQcWork(bookdata);
+  } else {
+    approvedWork(bookdata);
   }
 }
 
@@ -1147,3 +1164,129 @@ bulkFileUploadBtn.addEventListener("click", async () => {
     }
   }
 });
+
+
+// approved section====
+
+function approvedWork(bookdata) {
+  loadingWindow.classList.remove("hidden");
+  fetchData("/tracker/assignments/approved", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: token,
+    },
+    body: JSON.stringify({
+      uniqueId: bookdata.uniqueId,
+      sheetId: bookdata.link,
+    }),
+  }).then((data) => {
+    loadingWindow.classList.add("hidden");
+
+    if (data.status == "OKAY") {
+      if (data.task.length > 0) {
+        const finalData = [];
+        data.task.forEach((el) => {
+          let book = el[2];
+          NomenclatureData.forEach((el2) => {
+            if (el2[0] == "Book Code" && el2[1] == book) {
+              el[2] = el2[2];
+            }
+          });
+          finalData.push(el);
+        });
+        showCountDiv.querySelector(
+          ".show-count-divh2"
+        ).innerText = `You have ${data.task.length} tasks approved in this book`;
+        setApprovedData(finalData);
+      } else {
+        showCountDiv.querySelector(".show-count-divh2").innerText =
+          "You do not have any approved tasks in this book.";
+        setApprovedData([]);
+      }
+    } else {
+      showCountDiv.querySelector(".show-count-divh2").innerText =
+        "Something went wrong. Connect your manager";
+      setApprovedData([]);
+    }
+  });
+}
+
+
+function setApprovedData(arr) {
+  if (document.querySelector(".new-tile")) {
+    document.querySelectorAll(".new-tile").forEach((el) => el.remove());
+  }
+  if (arr.length > 0) {
+    arr.forEach((el) => {
+      var newTile = tile.cloneNode(true);
+      newTile.querySelector(".chapter-name").innerText = el[5];
+      newTile.querySelector(".question-type").innerText = el[7];
+      newTile.querySelector(".video-name").innerText = el[9];
+      newTile.querySelector(".row-num").innerText = el[el.length - 1];
+      newTile.querySelector(".videoName").value = el[9];
+      newTile.querySelector(".feedback-btn").remove();
+      newTile.querySelector(".videoUploadForm").remove();
+      newTile.querySelector(".video-name-div").remove();
+      newTile.querySelector(".deadline-div").remove();
+      newTile.querySelector(".view-question-btn").remove();
+      newTile
+      .querySelector(".qc-history-btn").innerText="View Suggestions"
+      newTile
+        .querySelector(".qc-history-btn")
+        .addEventListener("click", () => showSuggestion(el));
+      newTile
+        .querySelector(".preview-btn")
+        .addEventListener("click", () => previewVideo(el, false));
+      newTile.classList.remove("hidden");
+      newTile.classList.add("new-tile");
+      tileContainer.append(newTile);
+    });
+  }
+}
+
+
+function showSuggestion(el) {
+  popupHide();
+  popup.querySelector(".newHistory").style.opacity = "0";
+  popup.querySelector(".oldHistory").style.opacity = "0";
+  popup.classList.remove("hidden");
+  overlay.classList.remove("hidden");
+  if (el[31] == "Approved") {
+    if (el[32] == "") {
+      popup.querySelector(".title").innerText = "No Suggestions";
+    } else {
+      popup.querySelector(".title").innerText = "Suggestions";
+      popup.querySelector(".qcPopup").classList.remove("hidden");
+      popup.querySelector(".round").innerText = "Round 3";
+      popup.querySelector(".comment").innerText = el[32];
+      popup.querySelector(".status").innerText = "Approved";
+      popup.querySelector(".QCTime").innerText = `QC Date : ${el[30]}`;
+    }
+  } else if (el[26] == "Approved") {
+    if (el[27] == "") {
+      popup.querySelector(".title").innerText = "No Suggestions";
+    } else {
+      popup.querySelector(".title").innerText = "Suggestions";
+      popup.querySelector(".qcPopup").classList.remove("hidden");
+      popup.querySelector(".round").innerText = "Round 2";
+      popup.querySelector(".status").innerText = "Approved";
+      popup.querySelector(".comment").innerText = el[27];
+      popup.querySelector(".QCTime").innerText = `QC Date : ${el[25]}`;
+    }
+  } else {
+    if (el[22] == "") {
+      popup.querySelector(".title").innerText = "No Suggestions";
+    } else {
+      popup.querySelector(".title").innerText = "Suggestions";
+      popup.querySelector(".qcPopup").classList.remove("hidden");
+      popup.querySelector(".round").innerText = "Round 1";
+      popup.querySelector(".status").innerText = "Approved";
+      popup.querySelector(".comment").innerText = el[22];
+      popup.querySelector(".QCTime").innerText = `QC Date : ${el[20]}`;
+    }
+  }
+
+}
+
+
