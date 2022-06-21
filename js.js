@@ -1197,11 +1197,11 @@ function approvedWork(bookdata) {
         });
         showCountDiv.querySelector(
           ".show-count-divh2"
-        ).innerText = `You have ${data.task.length} tasks approved in this book`;
+        ).innerText = `You have ${data.task.length} tasks approved with suggestions in this book.`;
         setApprovedData(finalData);
       } else {
         showCountDiv.querySelector(".show-count-divh2").innerText =
-          "You do not have any approved tasks in this book.";
+          "We do not have any suggestions for you. You have done your job very adequately.";
         setApprovedData([]);
       }
     } else {
