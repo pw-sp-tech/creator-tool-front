@@ -899,6 +899,7 @@ function showQcHistory(el) {
   popup.querySelector(".title").innerText = "QC History";
   popup.querySelector(".qcPopup").classList.remove("hidden");
   popup.querySelector(".round").innerText = "Round 1";
+  popup.querySelector(".status").innerText = "Rejected";
   popup.querySelector(".comment").innerText = el[22];
   popup.querySelector(".QCTime").innerText = `QC Date : ${el[20]}`;
   if (el[15] == "[SME]Round3") {
@@ -914,6 +915,7 @@ function showNewHistory(el) {
   popup.querySelector(".oldHistory").style.opacity = "1";
   popup.querySelector(".round").innerText = "Round 2";
   popup.querySelector(".comment").innerText = el[27];
+  popup.querySelector(".status").innerText = "Rejected";
   popup.querySelector(".QCTime").innerText = `QC Date : ${el[25]}`;
   popup
     .querySelector(".oldHistory")
@@ -1032,6 +1034,7 @@ function showQcHistory2(el) {
     popup.querySelector(".qcPopup").classList.remove("hidden");
     popup.querySelector(".round").innerText = "Round 1";
     popup.querySelector(".comment").innerText = el[22];
+    popup.querySelector(".status").innerText = "Rejected";
     popup.querySelector(".QCTime").innerText = `QC Date : ${el[20]}`;
     if (el[15] == "[QC]Round3") {
       popup.querySelector(".newHistory").style.opacity = "1";
@@ -1047,6 +1050,7 @@ function showNewHistory2(el) {
   popup.querySelector(".oldHistory").style.opacity = "1";
   popup.querySelector(".round").innerText = "Round 2";
   popup.querySelector(".comment").innerText = el[27];
+  popup.querySelector(".status").innerText = "Rejected";
   popup.querySelector(".QCTime").innerText = `QC Date : ${el[25]}`;
   popup
     .querySelector(".oldHistory")
@@ -1231,7 +1235,7 @@ function setApprovedData(arr) {
       newTile.querySelector(".deadline-div").remove();
       newTile.querySelector(".view-question-btn").remove();
       newTile
-      .querySelector(".qc-history-btn").innerText="View Suggestions"
+        .querySelector(".qc-history-btn").innerText = "View Suggestions"
       newTile
         .querySelector(".qc-history-btn")
         .addEventListener("click", () => showSuggestion(el));
