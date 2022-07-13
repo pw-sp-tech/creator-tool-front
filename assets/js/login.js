@@ -45,7 +45,7 @@ $(function () {
     },
   });
 });
-const urlPrefix = "https://creator-tool-back.herokuapp.com";
+const urlPrefix = "http://creatortoolbackend-env.eba-nmpf5bth.ap-south-1.elasticbeanstalk.com";
 const fullNameDiv = document.querySelector(".fullname-div");
 const emailDiv = document.querySelector(".email-div");
 const passDiv = document.querySelector(".pass-div");

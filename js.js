@@ -114,7 +114,7 @@ switchModeBtn.addEventListener("click", () => {
     switchModeBtn.innerText = "Light Mode ☀";
   }
 });
-const urlPrefix = "https://creator-tool-back.herokuapp.com";
+const urlPrefix = "http://creatortoolbackend-env.eba-nmpf5bth.ap-south-1.elasticbeanstalk.com";
 const userName = localStorage.getItem("userName");
 const email = localStorage.getItem("userEmail");
 const welcomeName = document.querySelector(".welcomeName");
